@@ -1,0 +1,19 @@
+{
+  "name": "realtime-server",
+  "version": "1.0.0",
+  "description": "Servidor em tempo real para o Ufes fórum",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [
+    "socketio"
+  ],
+  "author": "andreocunha",
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^2.0.15",
+    "socket.io": "^4.4.1"
+  }
+}

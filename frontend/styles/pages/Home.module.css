@@ -1,0 +1,139 @@
+.container {
+  padding: 0;
+  margin: 0;
+  background-color: var(--background);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 6rem;
+  padding-left: 350px;
+  height: 100%;
+  min-height: 100vh;
+  width: 100%;
+  min-width: 100vw;
+}
+
+
+.filterArea {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 100px;
+  width: 100%;
+  height: 100px;
+}
+
+.filterArea button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 25px;
+  border-radius: 100px;
+  background-color: #cccccc;
+  color: #000;
+  font-size: 0.9rem;
+  border: none;
+  padding: 15px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.filterArea p {
+  margin-left: 5px;
+}
+
+.filterArea button:hover {
+  background-color: #7ebaff;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.selected {
+  background-color: #7ebaff !important;
+}
+
+
+/* .scrollArea {
+  height: 300px;
+  width: 100%;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+} */
+
+.questionsArea {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  padding-left: 100px;
+  padding-right: 15px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  min-width: 350px;
+  width: 90vw;
+  max-width: 100%;
+
+  height: 100%;
+  max-height: calc(100vh - 13rem);
+}
+
+/* width */
+.questionsArea::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.questionsArea::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px transparent; 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+.questionsArea::-webkit-scrollbar-thumb {
+  background: #1682FD; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.questionsArea::-webkit-scrollbar-thumb:hover {
+  background: #b30000; 
+}
+
+.loadingArea {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  max-width: 900px;
+}
+
+@media (max-width: 1150px) {
+  .container {
+    padding-left: 30%;
+  }
+}
+
+@media (max-width: 700px) {
+  .container {
+    padding-left: 0;
+  }
+
+  .filterArea {
+    justify-content: center;
+    padding-left: 0;
+  }
+
+  .questionsArea {
+    padding: 0;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  .questionsArea::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+  }
+}

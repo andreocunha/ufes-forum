@@ -1,0 +1,22 @@
+.container {
+    padding: 0;
+    margin: 0;
+    background-color: var(--background-menu);
+    filter: brightness(1.4);
+    max-height: 200px;
+    width: 150px;
+}
+
+.container p {
+    padding: 5px;
+    margin: 0;
+    height: 30px;
+    border-bottom: 2px solid var(--border-color);
+
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.container p:hover {
+    background-color: var(--menu-hover);
+}

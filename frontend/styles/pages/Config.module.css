@@ -1,0 +1,34 @@
+.container {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding-top: 8rem;
+    padding-left: 380px;
+    background-color: var(--background);
+    min-height: 100vh;
+    height: 100%;
+    width: 100%;
+}
+
+.theme {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 200px;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+
+@media (max-width: 700px) {
+    .container {
+        align-items: center;
+        justify-content: center;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin: 0;
+    }
+}
