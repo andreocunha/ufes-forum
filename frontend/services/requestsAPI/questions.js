@@ -63,6 +63,7 @@ export async function createQuestion(category, title, description, token) {
   }
   else {
     await erroMessage('Oops...', 'Preencha todos os campos!');
+    return false;
   }
 }
 

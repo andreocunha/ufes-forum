@@ -13,18 +13,19 @@ import { GiFinishLine } from "react-icons/gi";
 export default function Home() {
   const [filter, setFilter] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
 
   const {
     questions,
     setQuestions,
+    numberOfQuestionsTotal,
+    setNumberOfQuestionsTotal,
+    setNumberOfQuestionsNotAnswered
   } = useContext(GlobalContext)
 
 
   useEffect(async () => {
-    setQuestions(null);
-    const result = await getQuestions(1);
-    setQuestions(result);
+    await getMorePost();
   }, [])
 
 
@@ -38,25 +39,27 @@ export default function Home() {
     await new Promise(resolve => setTimeout(resolve, 100));
     
     let result = [];
-    setQuestions(null);
+    setQuestions([]);
     setHasMore(true);
     setPage(1); 
 
-    if (filter === 1) {
+    if (filterNumber === 1) {
       result = await getQuestions(1);
     }
-    else if (filter === 2) {
+    else if (filterNumber === 2) {
       result = await getOldestQuestions(1);
     }
-    else if (filter === 3) {
+    else if (filterNumber === 3) {
       result = await getMostViewedQuestions(1);
     }
-    setQuestions(result);
+    setQuestions(result.questions);
   }
 
 
   const getMorePost = async () => {
-    const result = await getQuestions(page + 1);
+    const response = await getQuestions(page + 1);
+    const result = response?.questions;
+    setNumberOfQuestionsTotal(response.count);
     setPage(page + 1);
     if (result.length === 0) {
       setHasMore(false);
@@ -82,15 +85,15 @@ export default function Home() {
       <div className={styles.filterArea}>
         <button className={filter === 1 ? styles.selected : {}} onClick={() => changeFilter(1)}>
           <FiClock size={18} color="#000" />
-          <p>Novos</p>
+          <p>Recentes ({numberOfQuestionsTotal})</p>
         </button>
         <button className={filter === 2 ? styles.selected : {}} onClick={() => changeFilter(2)}>
           <FiArrowDownRight size={18} color="#000" />
-          <p>Antigos</p>
+          <p>Antigos ({numberOfQuestionsTotal})</p>
         </button>
         <button className={filter === 3 ? styles.selected : {}} onClick={() => changeFilter(3)}>
           <MdLocalFireDepartment size={18} color="#000" />
-          <p>Visualizados</p>
+          <p>Visualizados ({numberOfQuestionsTotal})</p>
         </button>
       </div>
 
@@ -121,12 +124,6 @@ export default function Home() {
               ))}
             </InfiniteScroll>
           </div>
-          // <div className={styles.questionsArea}>
-
-          //   { questions && questions?.map((question, index) => (
-          //     <QuestionCard key={index} question={question} />
-          //   ))}
-          // </div>
           :
           <div className={styles.loadingArea}>
             <ReactLoading type="spinningBubbles" color="gray" height={150} width={150} />

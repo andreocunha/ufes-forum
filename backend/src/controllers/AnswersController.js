@@ -44,6 +44,7 @@ module.exports = {
             const answer = await question.answers.id(req.params.answerID);
             answer.text = text;
             answer.isSolution = isSolution;
+            question.wasAnswered = true;
             await question.save();
             res.status(200).json(answer);
         } catch (err) {

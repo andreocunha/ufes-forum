@@ -86,9 +86,11 @@ export default function CreateQuestion() {
 
                     <div 
                         className={styles.button} 
-                        onClick={ async () => await createQuestion(category, title, description, token)}
+                        onClick={ async () => {
+                            await createQuestion(category, title, description, token)
+                        }}
                     >
-                        <FiSend size={18} color="var(--button-text-color)"/> <p>Publicar</p>
+                        <FiSend id="submit" size={18} color="var(--button-text-color)"/> <p>Publicar</p>
                     </div>
                         
                 </div>

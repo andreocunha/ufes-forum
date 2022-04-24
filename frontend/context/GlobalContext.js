@@ -7,11 +7,8 @@ export function InfoProvider({ children }) {
     const [isOpen, setOpen] = useState(false);
     const [token, setToken] = useState(null);
     const [questions, setQuestions] = useState(null);
-<<<<<<< HEAD
     const [numberOfQuestionsTotal, setNumberOfQuestionsTotal] = useState(0);
     const [numberOfQuestionsNotAnswered, setNumberOfQuestionsNotAnswered] = useState(0);
-=======
->>>>>>> parent of 9e97779 (filtro e quantidade de questoes)
 
     async function searchSpecificQuestions(search) {
         if(search.length >= 2) {
@@ -28,6 +25,8 @@ export function InfoProvider({ children }) {
         <GlobalContext.Provider
             value={{
                 questions,
+                numberOfQuestionsTotal,
+                numberOfQuestionsNotAnswered,
                 isOpen,
                 token,
                 setOpen,
@@ -35,6 +34,8 @@ export function InfoProvider({ children }) {
                 searchSpecificQuestions,
                 getQuestions,
                 setQuestions,
+                setNumberOfQuestionsTotal,
+                setNumberOfQuestionsNotAnswered
             }}
         >
             {children}

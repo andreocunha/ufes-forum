@@ -41,7 +41,16 @@ module.exports = {
                     return { ...question._doc, author: author };
                 })
             );
-            res.json(questionsWithAuthor);
+
+            // get the number of questions
+            const count = await QuestionModel.countDocuments();
+
+            return res.json({
+                questions: questionsWithAuthor,
+                count,
+            });
+
+            // return res.json(questionsWithAuthor);
         } catch (err) {
             res.status(500).json({ error: err.message });
         }
@@ -63,7 +72,12 @@ module.exports = {
                     return { ...question._doc, author: author };
                 })
             );
-            res.json(questionsWithAuthor);
+            const count = await QuestionModel.countDocuments();
+
+            return res.json({
+                questions: questionsWithAuthor,
+                count,
+            });
         } catch (err) {
             res.status(500).json({ error: err.message });
         }
@@ -85,7 +99,12 @@ module.exports = {
                     return { ...question._doc, author: author };
                 })
             );
-            res.json(questionsWithAuthor);
+            const count = await QuestionModel.countDocuments();
+
+            return res.json({
+                questions: questionsWithAuthor,
+                count,
+            });
         } catch (err) {
             res.status(500).json({ error: err.message });
         }

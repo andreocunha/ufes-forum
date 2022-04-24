@@ -23,6 +23,10 @@ const QuestionModel = new mongoose.Schema({
             required: true,
         },
     ],
+    wasAnswered: {
+        type: Boolean,
+        default: false,
+    },
     views: {
         type: Number,
         default: 0,
