@@ -107,18 +107,11 @@ export default function Question(props) {
                             userQuestion: question?.author?.name,
                             userQuestionEmail: question?.author?.email,
                             userAnswer: props?.user?.name,
-                            url: `${process.env.API_URL}/Question/${question.id}`,
+                            url: `${process.env.NEXTAUTH_URL}/Question/${question.id}`,
                         }
                     )}
                 >Responder
                 </button>
-                {/* <button onClick={() => sendEmail(
-                    question?.title,
-                    question?.author?.name,
-                    question?.author?.email,
-                    props?.user?.name,
-                    `${process.env.API_URL}/Question/${question.id}`,
-                )}>EMAIL</button> */}
             </div>
         </div>
     )
