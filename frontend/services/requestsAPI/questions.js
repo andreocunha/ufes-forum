@@ -116,3 +116,24 @@ export async function updateQuestion(category, title, description, token, questi
     await erroMessage('Oops...', 'Preencha todos os campos!');
   }
 }
+
+
+export async function sendEmail(info) {
+  fetch('/api/email', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json, text/plain, */*',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(info)
+  }).then((res) => {
+    console.log('Response received')
+    if (res.status === 200) {
+      console.log(res.json());
+      console.log('Response succeeded!')
+    }
+    else {
+      console.log('Response failed!')
+    }
+  })
+}

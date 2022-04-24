@@ -4,8 +4,9 @@ import { CompleteQuestionCard } from "../../components/QuestionCard";
 import styles from '../../styles/pages/Question.module.css';
 import { getSession } from "next-auth/client"
 import { GlobalContext } from "../../context/GlobalContext";
-import Swal from "sweetalert2";
 import dynamic from "next/dynamic";
+import { sendEmail } from "../../services/requestsAPI/questions";
+import { submitNewAnswer } from "../../services/requestsAPI/answers";
 // import socket from "../../services/realtime/socketio";
 
 // import MdEditor from 'for-editor-markdown';
@@ -71,55 +72,9 @@ export default function Question(props) {
     //     socket.emit('newMessage', 'Hello world', props.question.id);
     // }
 
-    async function handleSubmitAnswer() {
-        // verify if all fields are filled
-        if (textAnswer !== '') {
-            const response = await fetch(`${process.env.API_URL}/answer/${question._id}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    text: textAnswer
-                })
-            });
-
-            if (response.status === 200) {
-                await Swal.fire({
-                    title: 'Resposta enviada!',
-                    text: 'A sua resposta foi enviada com sucesso!',
-                    icon: 'success',
-                    timer: 1500,
-                    showConfirmButton: false,
-                    timerProgressBar: true
-                });
-                window.location.reload();
-            }
-            else {
-                await Swal.fire({
-                    title: 'Erro!',
-                    text: 'Ocorreu um erro ao enviar a sua resposta! Tente deslogar e logar novamente.',
-                    icon: 'error',
-                    showConfirmButton: false,
-                    showCloseButton: true,
-                });
-            }
-        }
-        else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Preencha todos os campos!',
-                timer: 2000
-            });
-        }
-    }
-
     return (
         <div className={styles.container}>
             <CompleteQuestionCard question={question} />
-
             {/* <button onClick={emitMsgTest}>Teste</button> */}
 
             { question?.answers?.length > 0 &&
@@ -142,7 +97,28 @@ export default function Question(props) {
                     value={textAnswer} 
                     style={{ width: '100%', height: '350px' }}
                 />   
-                <button onClick={() => handleSubmitAnswer()}>Responder</button>
+                <button 
+                    onClick={() => submitNewAnswer(
+                        question._id, 
+                        token, 
+                        textAnswer, 
+                        {
+                            title: question?.title,
+                            userQuestion: question?.author?.name,
+                            userQuestionEmail: question?.author?.email,
+                            userAnswer: props?.user?.name,
+                            url: `${process.env.API_URL}/Question/${question.id}`,
+                        }
+                    )}
+                >Responder
+                </button>
+                {/* <button onClick={() => sendEmail(
+                    question?.title,
+                    question?.author?.name,
+                    question?.author?.email,
+                    props?.user?.name,
+                    `${process.env.API_URL}/Question/${question.id}`,
+                )}>EMAIL</button> */}
             </div>
         </div>
     )
@@ -174,7 +150,8 @@ export const getServerSideProps = async (context) => {
     
     return {
         props: {
-            question: question
+            question: question,
+            user: user
         }
     }
 }
