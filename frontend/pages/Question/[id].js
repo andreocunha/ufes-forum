@@ -107,7 +107,7 @@ export default function Question(props) {
                             userQuestion: question?.author?.name,
                             userQuestionEmail: question?.author?.email,
                             userAnswer: props?.user?.name,
-                            url: `${window?.location?.href}/Question/${question.id}`,
+                            url: `${window?.location?.href}`,
                         }
                     )}
                 >Responder
