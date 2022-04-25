@@ -5,6 +5,8 @@
     justify-content: flex-start;
     width: 100%;
     height: 80px;
+    margin: 0;
+    padding: 0;
 }
 
 .imageUser {
@@ -40,6 +42,8 @@
 }
 
 .secondaryInfo p {
+    display: flex;
+    align-items: center;
     font-size: 0.7rem;
     font-weight: 200;
     color: var(--text-color);

@@ -1,4 +1,5 @@
 const QuestionModel = require('../models/Question');
+const User = require('../models/User');
 
 module.exports = {
     // function to create a new answer
@@ -44,7 +45,7 @@ module.exports = {
             const answer = await question.answers.id(req.params.answerID);
             answer.text = text;
             answer.isSolution = isSolution;
-            question.wasAnswered = true;
+            question.wasAnswered = isSolution;
             await question.save();
             res.status(200).json(answer);
         } catch (err) {

@@ -6,10 +6,8 @@ import { FiList, FiTag, FiUser } from "react-icons/fi";
 import { useSession } from 'next-auth/client';
 import { SearchInput } from '../SearchInput';
 
-export function Menu() {
+export function LeftMenu() {
     const [session] = useSession();
-
-    const [value, setValue] = useState('');
 
     const {
         isOpen,

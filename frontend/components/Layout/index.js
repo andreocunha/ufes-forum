@@ -1,11 +1,11 @@
 import { Header } from "../Header";
-import { Menu } from "../Menu";
+import { LeftMenu } from "../LeftMenu";
 
 
 export function Layout({ children }) {
     return (
         <div>
-            <Menu />
+            <LeftMenu />
             <Header />
             {children}
         </div>

@@ -59,7 +59,8 @@ export default function Home() {
   const getMorePost = async () => {
     const response = await getQuestions(page + 1);
     const result = response?.questions;
-    setNumberOfQuestionsTotal(response.count);
+    console.log(result);
+    setNumberOfQuestionsTotal(response?.count);
     setPage(page + 1);
     if (result.length === 0) {
       setHasMore(false);

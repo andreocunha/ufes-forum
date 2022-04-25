@@ -23,35 +23,38 @@ export function QuestionCard(props) {
     }
 
     return (
-            <div className={styles.container}>
-                <div className={styles.userArea}>
-                    <SimpleUserCard 
-                        data={props.question.author} 
-                        created={props.question.created} 
-                        views={props.question.views}
-                    />
-                    <div className={styles.icons} onClick={() => copyLinkToPasteboard(props?.question?._id)}>
-                        <FaCopy size={18} color="var(--text-color)"/>
+        <div className={styles.container} style={ props?.question?.wasAnswered ? { borderLeft: '8px solid #06BA2B' } : {}}>
+            
+            { props?.question?.wasAnswered && <h2>SOLUCIONADO</h2>}
+            <div className={styles.userArea}>
+                <SimpleUserCard 
+                    data={props?.question?.author} 
+                    created={props?.question?.created} 
+                    views={props?.question?.views}
+                    numAnswers={props?.question?.answers?.length}
+                />
+                <div className={styles.icons} onClick={() => copyLinkToPasteboard(props?.question?._id)}>
+                    <FaCopy size={18} color="var(--text-color)"/>
+                </div>
+            </div>
+            
+            <a href={`/Question/${props.question._id}`} target="_blank" rel="noopener noreferrer" className={styles.question}>
+                <div className={styles.question}>
+                    <p className={styles.title}>{props.question.title}</p>
+                    {/* <p className={styles.description}>{props.question.description}</p> */}
+
+                    <div className={styles.tags}>
+                    {props.question.tags && 
+                        props.question.tags.map((tag, index) => (
+                            // show only first 3 tags
+                            index < 3 &&
+                            <span key={index} className={styles.tag}>{tag}</span>
+                        ))
+                    }
                     </div>
                 </div>
-                
-                <a href={`/Question/${props.question._id}`} target="_blank" rel="noopener noreferrer" className={styles.question}>
-                    <div className={styles.question}>
-                        <p className={styles.title}>{props.question.title}</p>
-                        {/* <p className={styles.description}>{props.question.description}</p> */}
-
-                        <div className={styles.tags}>
-                        {props.question.tags && 
-                            props.question.tags.map((tag, index) => (
-                                // show only first 3 tags
-                                index < 3 &&
-                                <span key={index} className={styles.tag}>{tag}</span>
-                            ))
-                        }
-                        </div>
-                    </div>
-                </a>
-            </div>
+            </a>
+        </div>
     )
 }
 

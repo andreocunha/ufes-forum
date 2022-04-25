@@ -21,7 +21,8 @@ export function SimpleUserCard(props) {
                 <p>{props?.data?.name}</p>
                 <div className={styles.secondaryInfo}>
                     {props?.created && <p>{moment(props?.created).fromNow()}</p>}
-                    {props?.views > 0 && <p>( {props.views} views )</p>}
+                    {props?.numAnswers > 0 && <p>[ {props?.numAnswers} respostas ]</p>}
+                    {props?.views > 0 && <p>{props?.views} views</p>}
                 </div>
             </div>
         </div>
@@ -91,7 +92,7 @@ export function CompleteUserCard(props) {
                 <span>
                     <h2>{userInfo?.name}</h2>
                     <p>{userInfo?.email}</p>
-                    <h3>Pontuação: <strong>10</strong></h3>
+                    <h3>Pontuação: <strong>{userInfo?.score}</strong></h3>
                     <div className={styles.mediaArea}>
                         {userInfo?.github && <a href={userInfo?.github} target="_blank" rel="noopener noreferrer"><BsGithub size={20}/></a>}
 
