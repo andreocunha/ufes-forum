@@ -37,7 +37,7 @@ export function Header({children}) {
                 <>
                     <Link href="/CreateQuestion">
                         <div className={styles.button}>
-                            <FiPlusCircle size={18} color="var(--button-text-color)"/> <p>Fazer pergunta</p>
+                            <FiPlusCircle size={18} color="#FFFFFF"/> <p>Fazer pergunta</p>
                         </div>
                     </Link>
                     <div className={styles.login}> 

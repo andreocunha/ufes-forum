@@ -97,3 +97,16 @@ export async function submitNewAnswer(questionID, token, textAnswer, emailInfo) 
         await erroMessage('Erro ao enviar a resposta!', 'Preencha todos os campos!', 2000);
     }
 }
+
+export async function getAnswersByUser(page, userName) {
+    const result = await fetch(`${process.env.API_URL}/questions/answered/${userName}?page=${page}&limit=10`)
+      .then(res => res.json())
+      .then(data => {
+        return data;
+      })
+      .catch(err => {
+        console.log(err)
+        return null;
+      })
+    return result;
+  }

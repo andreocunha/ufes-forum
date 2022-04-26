@@ -39,6 +39,19 @@ export async function getMostViewedQuestions(page) {
   return result;
 }
 
+export async function getQuestionsByUser(page, userName) {
+  const result = await fetch(`${process.env.API_URL}/questions/user/${userName}?page=${page}&limit=10`)
+    .then(res => res.json())
+    .then(data => {
+      return data;
+    })
+    .catch(err => {
+      console.log(err)
+      return null;
+    })
+  return result;
+}
+
 export async function createQuestion(category, title, description, token) {
   // verify if all fields are filled
   if (category && title && description) {

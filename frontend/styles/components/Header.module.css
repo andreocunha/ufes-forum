@@ -38,10 +38,10 @@
     justify-content: space-around;
     width: 180px;
     height: 40px;
-    background-color: var(--button-color);
+    background-color: #1682FD;
     border: none;
     border-radius: 5px;
-    color: var(--button-text-color);
+    color: #FFFFFF;
     font-size: 1.2rem;
     font-weight: 500;
     cursor: pointer;

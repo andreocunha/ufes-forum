@@ -7,8 +7,7 @@ import ReactLoading from 'react-loading';
 import styles from '../../styles/pages/Home.module.css';
 import { GlobalContext } from '../../context/GlobalContext';
 import { getMostViewedQuestions, getOldestQuestions, getQuestions } from '../../services/requestsAPI/questions';
-import InfiniteScroll from "react-infinite-scroll-component";
-import { GiFinishLine } from "react-icons/gi";
+import { InfiniteLoad } from '../../components/InfiniteLoad';
 
 export default function Home() {
   const [filter, setFilter] = useState(1);
@@ -100,31 +99,15 @@ export default function Home() {
 
       {
         questions !== null ?
-          <div
-            id="scrollableDiv"
-            className={styles.questionsArea}
+          <InfiniteLoad 
+            dataLength={questions?.length}
+            next={getMorePost}
+            hasMore={hasMore}
           >
-            <InfiniteScroll
-              dataLength={questions ? questions.length : 0}
-              next={getMorePost}
-              hasMore={hasMore}
-              scrollableTarget="scrollableDiv"
-              loader={
-                <div className={styles.loadingArea}>
-                  <ReactLoading type="spin" color="gray" height={50} width={50} />
-                </div>
-              }
-              endMessage={
-                <div className={styles.loadingArea}>
-                  <GiFinishLine size={50} color="var(--text-color)" />
-                </div>
-              }
-            >
-              {questions && questions?.map((question, index) => (
-                <QuestionCard key={index} question={question} />
-              ))}
-            </InfiniteScroll>
-          </div>
+            {questions && questions?.map((question, index) => (
+              <QuestionCard key={index} question={question} />
+            ))}
+          </InfiniteLoad>
           :
           <div className={styles.loadingArea}>
             <ReactLoading type="spinningBubbles" color="gray" height={150} width={150} />

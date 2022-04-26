@@ -31,8 +31,6 @@ module.exports = {
             const questions = await QuestionModel.find().skip(skip).limit(limit).sort('-created');
             // url example: /questions?page=2&limit=10
 
-            // const questions = await QuestionModel.find().sort('-created');
-
             // get the author of each question and include it in the questions
             const questionsWithAuthor = await Promise.all(
                 questions.map(async (question) => {
@@ -173,18 +171,6 @@ module.exports = {
                 }
             }
 
-            // verify if has comments and get the author of each comment and add it to the question
-            // if (question.comments.length > 0) {
-            //     for (let i = 0; i < question.comments.length; i++) {
-            //         const comment = await User.findById(question.comments[i].author);
-            //         question.comments[i].author = comment;
-            //         // verify if has user logged in and if the user is the author of the comment
-            //         if (user?._id.equals(question.comments[i].author._id)) {
-            //             question.comments[i].author.role = 'admin';
-            //         }
-            //     }
-            // }
-
             res.json(question);
         } catch (err) {
             res.status(500).json({ error: err.message });
@@ -195,7 +181,12 @@ module.exports = {
     async listByAuthor(req, res) {
         try {
             const author = await User.findOne({ name: req.params.name });
-            const questions = await QuestionModel.find({ author: author._id }).sort('-created');
+            const page = +req.query.page || 1;
+            const limit = +req.query.limit || 10;
+            const skip = (page - 1) * limit;
+
+            const questions = await QuestionModel.find({ author: author._id }).skip(skip).limit(limit).sort('-created');
+            // const questions = await QuestionModel.find({ author: author._id }).sort('-created');
 
             // get the author of each question and include it in the questions
             const questionsWithAuthor = await Promise.all(
@@ -204,7 +195,15 @@ module.exports = {
                     return { ...question._doc, author: author };
                 })
             );
-            res.json(questionsWithAuthor);
+
+            const count = await QuestionModel.countDocuments({ author: author._id });
+
+            return res.json({
+                questions: questionsWithAuthor,
+                count,
+            });
+
+            // res.json(questionsWithAuthor);
 
         } catch (err) {
             res.status(500).json({ error: err.message });
@@ -234,7 +233,12 @@ module.exports = {
     async listAnsweredByAuthor(req, res) {
         try {
             const author = await User.findOne({ name: req.params.name });
-            const questions = await QuestionModel.find({ answers: { $elemMatch: { author: author._id } } }).sort('-created');
+            const page = +req.query.page || 1;
+            const limit = +req.query.limit || 10;
+            const skip = (page - 1) * limit;
+
+            const questions = await QuestionModel.find({ answers: { $elemMatch: { author: author._id } } }).skip(skip).limit(limit).sort('-created');
+            // const questions = await QuestionModel.find({ answers: { $elemMatch: { author: author._id } } }).sort('-created');
 
             // get the author of each question and include it in the questions
             const questionsWithAuthor = await Promise.all(
@@ -243,7 +247,15 @@ module.exports = {
                     return { ...question._doc, author: author };
                 })
             );
-            res.json(questionsWithAuthor);
+
+            const count = await QuestionModel.countDocuments({ answers: { $elemMatch: { author: author._id } } });
+
+            return res.json({
+                questions: questionsWithAuthor,
+                count,
+            });
+
+            // res.json(questionsWithAuthor);
 
         } catch (err) {
             res.status(500).json({ error: err.message });
