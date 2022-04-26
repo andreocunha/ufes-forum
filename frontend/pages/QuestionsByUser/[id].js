@@ -37,6 +37,7 @@ export default function QuestionsByUser(props) {
     return (
         <div className={styles.container}>
             <div className={styles.main2} >
+                {questions.length > 0 && 
                 <InfiniteLoad
                     dataLength={questions?.length}
                     next={getMorePost}
@@ -45,7 +46,7 @@ export default function QuestionsByUser(props) {
                     {questions && questions?.map((question, index) => (
                         <QuestionCard key={index} question={question} />
                     ))}
-                </InfiniteLoad>
+                </InfiniteLoad>}
             </div>
         </div>
     )

@@ -37,6 +37,7 @@ export default function MyAnswers(props) {
 
     return (
         <div className={styles.container}>
+            {questions.length > 0 && 
             <div className={styles.main2}>
                 <InfiniteLoad 
                     dataLength={questions?.length}
@@ -48,6 +49,7 @@ export default function MyAnswers(props) {
                     ))}
                 </InfiniteLoad>
             </div>
+            }
         </div>
     )
 }

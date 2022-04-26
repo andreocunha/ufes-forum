@@ -38,6 +38,7 @@ export default function QuestionsByTag(props){
     return (
         <div className={styles.container}>
             <div className={styles.main2} >
+                {questions.length > 0 && 
                 <InfiniteLoad
                     dataLength={questions?.length}
                     next={getMorePost}
@@ -46,7 +47,7 @@ export default function QuestionsByTag(props){
                     {questions && questions?.map((question, index) => (
                         <QuestionCard key={index} question={question} />
                     ))}
-                </InfiniteLoad>
+                </InfiniteLoad>}
             </div>
         </div>
     )
