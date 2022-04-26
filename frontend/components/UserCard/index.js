@@ -7,6 +7,7 @@ import { FiEdit, FiCheck } from "react-icons/fi";
 import { BsGithub, BsInstagram, BsLinkedin } from "react-icons/bs";
 import { updateUserInfo, updateUserAnonymousInfo } from "../../services/requestsAPI/users";
 import { GlobalContext } from "../../context/GlobalContext";
+import Link from "next/link";
 
 export function SimpleUserCard(props) {
 
@@ -15,17 +16,19 @@ export function SimpleUserCard(props) {
     },[])
     
     return (
-        <div className={styles.container}>
-            <img src={props?.data?.image} alt={props?.data?.name} width="40px" height="40px" className={styles.imageUser}/>
-            <div className={styles.userInfo}>
-                <p>{props?.data?.name}</p>
-                <div className={styles.secondaryInfo}>
-                    {props?.created && <p>{moment(props?.created).fromNow()}</p>}
-                    {props?.numAnswers > 0 && <p>[ {props?.numAnswers} respostas ]</p>}
-                    {props?.views > 0 && <p>{props?.views} views</p>}
+        <Link href={`/QuestionsByUser/${props?.data?.name}`}>
+            <div className={styles.container}>
+                <img src={props?.data?.image} alt={props?.data?.name} width="40px" height="40px" className={styles.imageUser}/>
+                <div className={styles.userInfo}>
+                    <p>{props?.data?.name}</p>
+                    <div className={styles.secondaryInfo}>
+                        {props?.created && <p>{moment(props?.created).fromNow()}</p>}
+                        {props?.numAnswers > 0 && <p>[ {props?.numAnswers} respostas ]</p>}
+                        {props?.views > 0 && <p>{props?.views} views</p>}
+                    </div>
                 </div>
             </div>
-        </div>
+        </Link>
     )
 }
 

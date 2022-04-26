@@ -13,7 +13,7 @@ export function InfiniteLoad({ children, dataLength, next, hasMore, styleInfinit
         scrollableTarget="scrollableDiv"
         loader={
           <div className={styles.loadingArea}>
-            <img src="./loading.gif" width={50} />
+            <img src="./loading.gif" width={50} alt="carregando..." />
           </div>
         }
         endMessage={

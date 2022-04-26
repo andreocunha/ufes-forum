@@ -213,7 +213,11 @@ module.exports = {
     // function to list all questions by a specific tag name
     async listByTag(req, res) {
         try {
-            const questions = await QuestionModel.find({ tags: req.params.tag }).sort('-created');
+            const page = +req.query.page || 1;
+            const limit = +req.query.limit || 10;
+            const skip = (page - 1) * limit;
+
+            const questions = await QuestionModel.find({ tags: req.params.tag }).skip(skip).limit(limit).sort('-created');
             
             // get the author of each question and include it in the questions
             const questionsWithAuthor = await Promise.all(
@@ -222,7 +226,13 @@ module.exports = {
                     return { ...question._doc, author: author };
                 })
             );
-            res.json(questionsWithAuthor);
+            
+            const count = await QuestionModel.countDocuments({ tags: req.params.tag });
+
+            return res.json({
+                questions: questionsWithAuthor,
+                count,
+            });
 
         } catch (err) {
             res.status(500).json({ error: err.message });

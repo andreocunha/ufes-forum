@@ -52,6 +52,19 @@ export async function getQuestionsByUser(page, userName) {
   return result;
 }
 
+export async function getQuestionsByTag(page, tagId) {
+  const result = await fetch(`${process.env.API_URL}/questions/tag/${tagId}?page=${page}&limit=10`)
+    .then(res => res.json())
+    .then(data => {
+      return data;
+    })
+    .catch(err => {
+      console.log(err)
+      return null;
+    })
+  return result;
+}
+
 export async function createQuestion(category, title, description, token) {
   // verify if all fields are filled
   if (category && title && description) {

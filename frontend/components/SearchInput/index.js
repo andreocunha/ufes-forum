@@ -16,6 +16,7 @@ export function SearchInput(){
         <input 
             type="text" 
             placeholder="Buscar" 
+            style={{ color: '#000' }}
             value={value} 
             onChange={(e) => setValue(e.target.value)}
             onKeyPress={(e) => {
