@@ -32,7 +32,6 @@ export default function EditTopic({ infos, type }) {
         if (!session) {
             window.location.href = '/';
         }
-        console.log(infos)
         
         if(type === 'question') {
             infos.tags.map(category => {
@@ -44,7 +43,6 @@ export default function EditTopic({ infos, type }) {
             setDescription(infos.description);
         }
         else {
-            console.log(infos)
             // setCategory(infos.category);
             // setTitle(infos.title);
             // setDescription(infos.description);

@@ -6,6 +6,7 @@ import { GlobalContext } from "../../context/GlobalContext";
 import dynamic from "next/dynamic";
 import Select from 'react-dropdown-select';
 import { createQuestion } from "../../services/requestsAPI/questions";
+import Swal from "sweetalert2";
 
 // import MdEditor from 'for-editor-markdown';
 // load dynamic import MdEditor
@@ -51,6 +52,31 @@ export default function CreateQuestion() {
         { label: "Haskell", value: "Haskell" },
     ];
 
+    async function handleUploadFile(file) {
+        Swal.showLoading();
+
+        const form = new FormData();
+        form.append("file", file);
+        const response = await fetch("/api/googledrive", {
+            method: "POST",
+            body:form
+        })
+        .then(res => res.json())
+        .then(data => {
+            return data;
+        })
+        .catch(error => {
+            console.log(error.message);
+            return 'error';
+        });
+        // close loading
+        Swal.close();
+
+        if(response !== 'error') {
+            setDescription(description + `![alt](${response?.message?.image_url})`);
+        }
+    }
+
     return (
         <div className={styles.container}>
             {!session ?
@@ -80,6 +106,7 @@ export default function CreateQuestion() {
                         <MdEditor
                             value={description}
                             onChange={setDescription}
+                            addImg={ async (file) => await handleUploadFile(file)}
                             style={{ height: '400px' }}
                         />   
                     </div>

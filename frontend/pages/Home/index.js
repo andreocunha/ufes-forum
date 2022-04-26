@@ -58,7 +58,7 @@ export default function Home() {
   const getMorePost = async () => {
     const response = await getQuestions(page + 1);
     const result = response?.questions;
-    console.log(result);
+
     setNumberOfQuestionsTotal(response?.count);
     setPage(page + 1);
     if (result.length === 0) {
