@@ -46,6 +46,17 @@ module.exports = {
             answer.text = text;
             answer.isSolution = isSolution;
             question.wasAnswered = isSolution;
+
+            // get the user of answer and add 100 to score and update
+            const user = await User.findById(answer.author);
+            if(isSolution){
+                user.score += 100;
+            }
+            else {
+                user.score -= 100;
+            }
+            await user.save();
+
             await question.save();
             res.status(200).json(answer);
         } catch (err) {
