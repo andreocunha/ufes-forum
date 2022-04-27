@@ -49,7 +49,7 @@ export default function EditTopic({ infos, type }) {
             // setDescription(infos.description);
         }
 
-    }, [session]);
+    }, []);
 
     async function updateTopic(){
         if(type === 'question'){
