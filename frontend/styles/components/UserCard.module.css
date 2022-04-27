@@ -10,11 +10,6 @@
     transition: 0.2s;
 }
 
-.container:hover {
-    cursor: pointer;
-    filter: brightness(0.7);
-}
-
 .imageUser {
     border-radius: 50%;
 }
@@ -30,14 +25,17 @@
 .userInfo p {
     margin: 0;
     padding: 0;
-}
-
-/* fist element of userInfo */
-.userInfo p{
     font-size: 1rem;
     font-weight: 600;
     color: var(--text-color);
     margin-bottom: 3px;
+    transition: 0.2s;
+}
+
+/* fist element of userInfo p */
+.name:hover {
+    color: #1682FD;
+    cursor: pointer;
 }
 
 .secondaryInfo {

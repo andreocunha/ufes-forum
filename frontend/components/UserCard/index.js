@@ -16,11 +16,12 @@ export function SimpleUserCard(props) {
     },[])
     
     return (
-        <Link href={`/QuestionsByUser/${props?.data?.name}`}>
             <div className={styles.container}>
                 <img src={props?.data?.image} alt={props?.data?.name} width="40px" height="40px" className={styles.imageUser}/>
                 <div className={styles.userInfo}>
-                    <p>{props?.data?.name}</p>
+                    <Link href={`/QuestionsByUser/${props?.data?.name}`}>
+                        <p className={styles.name}>{props?.data?.name}</p>
+                    </Link>
                     <div className={styles.secondaryInfo}>
                         {props?.created && <p>{moment(props?.created).fromNow()}</p>}
                         {props?.numAnswers > 0 && <p>[ {props?.numAnswers} respostas ]</p>}
@@ -28,7 +29,6 @@ export function SimpleUserCard(props) {
                     </div>
                 </div>
             </div>
-        </Link>
     )
 }
 

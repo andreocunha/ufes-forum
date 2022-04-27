@@ -7,6 +7,7 @@ import { GlobalContext } from "../../context/GlobalContext";
 import dynamic from "next/dynamic";
 import { sendEmail } from "../../services/requestsAPI/questions";
 import { submitNewAnswer } from "../../services/requestsAPI/answers";
+import { handleUploadFile } from "../../services/requestsAPI/drive";
 // import socket from "../../services/realtime/socketio";
 
 // import MdEditor from 'for-editor-markdown';
@@ -95,6 +96,7 @@ export default function Question(props) {
                     placeholder="Escreva sua resposta aqui..."
                     onChange={setTextAnswer}
                     value={textAnswer} 
+                    addImg={ async (file) => setTextAnswer(textAnswer + await handleUploadFile(file))}
                     style={{ width: '100%', height: '350px' }}
                 />   
                 <button 

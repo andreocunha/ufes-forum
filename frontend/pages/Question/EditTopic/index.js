@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 import Select from 'react-dropdown-select';
 import { updateQuestion } from "../../../services/requestsAPI/questions";
 import { updateAnswer } from "../../../services/requestsAPI/answers";
+import { handleUploadFile } from "../../../services/requestsAPI/drive";
 
 // import MdEditor from 'for-editor-markdown';
 // load dynamic import MdEditor
@@ -59,21 +60,15 @@ export default function EditTopic({ infos, type }) {
     }
 
     const options = [
-        { label: "JavaScript", value: "JavaScript" },
-        { label: "Java", value: "Java" },
-        { label: "Python", value: "Python" },
-        { label: "C#", value: "C#" },
+        { label: "Prog1", value: "Prog1" },
+        { label: "Prog2", value: "Prog2" },
+        { label: "ED1", value: "ED1" },
+        { label: "ED2", value: "ED2" },
         { label: "C++", value: "C++" },
         { label: "C", value: "C" },
-        { label: "PHP", value: "PHP" },
-        { label: "Ruby", value: "Ruby" },
-        { label: "Swift", value: "Swift" },
-        { label: "Go", value: "Go" },
-        { label: "Objective-C", value: "Objective-C" },
-        { label: "Kotlin", value: "Kotlin" },
-        { label: "R", value: "R" },
-        { label: "Scala", value: "Scala" },
-        { label: "Haskell", value: "Haskell" },
+        { label: "Java", value: "Java" },
+        { label: "Python", value: "Python" },
+        { label: "JavaScript", value: "JavaScript" },
     ];
 
     return (
@@ -108,6 +103,7 @@ export default function EditTopic({ infos, type }) {
                         <MdEditor
                             value={description}
                             onChange={setDescription}
+                            addImg={ async (file) => setDescription(description + await handleUploadFile(file))}
                             style={{ height: '400px' }}
                         />   
                     </div>

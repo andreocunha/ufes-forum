@@ -6,7 +6,7 @@ import { GlobalContext } from "../../context/GlobalContext";
 import dynamic from "next/dynamic";
 import Select from 'react-dropdown-select';
 import { createQuestion } from "../../services/requestsAPI/questions";
-import Swal from "sweetalert2";
+import { handleUploadFile } from "../../services/requestsAPI/drive";
 
 // import MdEditor from 'for-editor-markdown';
 // load dynamic import MdEditor
@@ -35,47 +35,16 @@ export default function CreateQuestion() {
 
 
     const options = [
-        { label: "JavaScript", value: "JavaScript" },
-        { label: "Java", value: "Java" },
-        { label: "Python", value: "Python" },
-        { label: "C#", value: "C#" },
+        { label: "Prog1", value: "Prog1" },
+        { label: "Prog2", value: "Prog2" },
+        { label: "ED1", value: "ED1" },
+        { label: "ED2", value: "ED2" },
         { label: "C++", value: "C++" },
         { label: "C", value: "C" },
-        { label: "PHP", value: "PHP" },
-        { label: "Ruby", value: "Ruby" },
-        { label: "Swift", value: "Swift" },
-        { label: "Go", value: "Go" },
-        { label: "Objective-C", value: "Objective-C" },
-        { label: "Kotlin", value: "Kotlin" },
-        { label: "R", value: "R" },
-        { label: "Scala", value: "Scala" },
-        { label: "Haskell", value: "Haskell" },
+        { label: "Java", value: "Java" },
+        { label: "Python", value: "Python" },
+        { label: "JavaScript", value: "JavaScript" },
     ];
-
-    async function handleUploadFile(file) {
-        Swal.showLoading();
-
-        const form = new FormData();
-        form.append("file", file);
-        const response = await fetch("/api/googledrive", {
-            method: "POST",
-            body:form
-        })
-        .then(res => res.json())
-        .then(data => {
-            return data;
-        })
-        .catch(error => {
-            console.log(error.message);
-            return 'error';
-        });
-        // close loading
-        Swal.close();
-
-        if(response !== 'error') {
-            setDescription(description + `![alt](${response?.message?.image_url})`);
-        }
-    }
 
     return (
         <div className={styles.container}>
@@ -106,7 +75,7 @@ export default function CreateQuestion() {
                         <MdEditor
                             value={description}
                             onChange={setDescription}
-                            addImg={ async (file) => await handleUploadFile(file)}
+                            addImg={ async (file) => setDescription(description + await handleUploadFile(file))}
                             style={{ height: '400px' }}
                         />   
                     </div>
