@@ -12,6 +12,7 @@ const ValidateAnswer = require('./middlewares/ValidateAnswer');
 const ValidateQuestion = require('./middlewares/ValidateQuestion');
 const ValidateComment = require('./middlewares/ValidateComment');
 const ValidateToken = require('./middlewares/ValidateToken');
+const ValidateUser = require('./middlewares/ValidateUser');
 
 const routes = express.Router();
 
@@ -24,7 +25,7 @@ routes.put('/users/:id/info', ValidateToken, UserController.updateInfo);
 routes.delete('/users/:id', ValidateToken, UserController.delete);
 
 // routes for question
-routes.post('/questions', ValidateToken, QuestionController.create);
+routes.post('/questions', [ValidateToken, ValidateUser], QuestionController.create);
 routes.get('/questions', QuestionController.list);
 routes.get('/questions/oldest', QuestionController.listOldest);
 routes.get('/questions/mostViewed', QuestionController.listMostViewed);
@@ -33,7 +34,7 @@ routes.get('/questions/user/:name', QuestionController.listByAuthor);
 routes.get('/questions/tag/:tag', QuestionController.listByTag);
 routes.get('/questions/answered/:name', QuestionController.listAnsweredByAuthor);
 routes.get('/questions/search/:text', QuestionController.search);
-routes.put('/questions/:id', ValidateToken, QuestionController.update);
+routes.put('/questions/:id', [ValidateToken, ValidateUser], QuestionController.update);
 routes.delete('/questions/:id', [ValidateToken, ValidateQuestion], QuestionController.delete);
 
 // routes for answer
