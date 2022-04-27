@@ -24,7 +24,9 @@ export default function Home() {
 
 
   useEffect(async () => {
-    await getMorePost();
+    if (questions.length === null) {
+      await getMorePost();
+    }
   }, [])
 
 
