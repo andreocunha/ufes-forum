@@ -13,9 +13,11 @@ export const config = {
 // Request full drive access.
 const SCOPES = ['https://www.googleapis.com/auth/drive'];
 
+const { privateKey } = JSON.parse(process.env.DRIVE_PRIVATE_KEY || '{ privateKey: null }')
+
 const auth = new google.auth.JWT(
     process.env.CLIENT_EMAIL, null,
-    process.env.DRIVE_PRIVATE_KEY, SCOPES
+    privateKey, SCOPES
 );
 
 const drive = google.drive({version: 'v3', auth});
