@@ -81,8 +81,8 @@ export const getServerSideProps = async (context) => {
     
     return {
         props: {
-            questions: questions.questions,
-            count: questions.count,
+            questions: questions?.questions || [],
+            count: questions?.count || 0,
             user: user
         }
     }

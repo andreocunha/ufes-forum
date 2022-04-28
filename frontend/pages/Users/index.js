@@ -49,7 +49,7 @@ export const getServerSideProps = async (context) => {
     
     return {
         props: {
-            users: users
+            users: users || []
         }
     }
 }

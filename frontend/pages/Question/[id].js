@@ -145,7 +145,7 @@ export const getServerSideProps = async (context) => {
     
     return {
         props: {
-            question: question,
+            question: question || {},
             user: user
         }
     }
