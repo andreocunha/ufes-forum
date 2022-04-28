@@ -38,22 +38,18 @@ const UserModel = new mongoose.Schema({
     nickname: { 
         type: String, 
         default: '',
-        unique: true 
     },
     github: {
         type: String,
         default: '',
-        unique: true,
     },
     linkedin: {
         type: String,
         default: '',
-        unique: true,
     },
     instagram: {
         type: String,
         default: '',
-        unique: true,
     },
     created: { 
         type: Date, 
