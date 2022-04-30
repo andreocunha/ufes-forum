@@ -19,7 +19,9 @@ export default function Home() {
     setQuestions,
     numberOfQuestionsTotal,
     setNumberOfQuestionsTotal,
-    setNumberOfQuestionsNotAnswered
+    setNumberOfQuestionsNotAnswered,
+    pageQuestions,
+    setPageQuestions,
   } = useContext(GlobalContext)
 
 
@@ -58,17 +60,17 @@ export default function Home() {
 
 
   const getMorePost = async () => {
-    const response = await getQuestions(page + 1);
-    console.log(response);
+    const response = await getQuestions(pageQuestions + 1);
 
     const result = response?.questions;
 
-    setNumberOfQuestionsTotal(response?.count);
-    setPage(page + 1);
     if (result?.length === 0) {
       setHasMore(false);
     }
     else {
+      setNumberOfQuestionsTotal(response?.count);
+      setPageQuestions(pageQuestions + 1);
+
       if(questions === null) {
         setQuestions(result);
       }

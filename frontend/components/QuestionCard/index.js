@@ -12,6 +12,7 @@ const MarkdownPreview = dynamic(() => import('@uiw/react-markdown-preview'), {
 
 import '@uiw/react-markdown-preview/markdown.css';
 import { shortSuccessMessage } from "../../utils/alerts";
+import Link from "next/link";
 
 export function QuestionCard(props) {
     
@@ -23,7 +24,11 @@ export function QuestionCard(props) {
     }
 
     return (
-        <div className={styles.container} style={ props?.question?.wasAnswered ? { borderLeft: '8px solid #06BA2B' } : {}}>
+        <a 
+            href={`/Question/${props.question._id}`} target="_blank" rel="noopener noreferrer"
+            className={styles.container} 
+            style={ props?.question?.wasAnswered ? { borderLeft: '8px solid #06BA2B' } : {}}
+        >
             
             { props?.question?.wasAnswered && <h2>SOLUCIONADO</h2>}
             <div className={styles.userArea}>
@@ -33,9 +38,11 @@ export function QuestionCard(props) {
                     views={props?.question?.views}
                     numAnswers={props?.question?.answers?.length}
                 />
-                <div className={styles.icons} onClick={() => copyLinkToPasteboard(props?.question?._id)}>
-                    <FaCopy size={18} color="var(--text-color)"/>
-                </div>
+                <Link href={`/`}>
+                    <div className={styles.icons} onClick={() => copyLinkToPasteboard(props?.question?._id)}>
+                        <FaCopy size={18} color="var(--text-color)"/>
+                    </div>
+                </Link>
             </div>
             
             <a href={`/Question/${props.question._id}`} target="_blank" rel="noopener noreferrer" className={styles.question}>
@@ -54,7 +61,7 @@ export function QuestionCard(props) {
                     </div>
                 </div>
             </a>
-        </div>
+        </a>
     )
 }
 
@@ -65,12 +72,6 @@ export function CompleteQuestionCard(props) {
             <div className={styles.topContainer}>
                 <SimpleUserCard data={props.question.author} created={props.question.created}/>
                 {props?.question?.author?.role == 'admin' && 
-                    // <FiTrash 
-                    //     className={styles.icons} 
-                    //     size={18} 
-                    //     color="var(--text-color)" 
-                    //     onClick={ async () => await deleteQuestion(props.question.id, token)}
-                    // />
                     <SimpleMenuList id={props.question.id} type="question" />
                 }
             </div>

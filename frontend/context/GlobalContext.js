@@ -7,6 +7,7 @@ export function InfoProvider({ children }) {
     const [isOpen, setOpen] = useState(false);
     const [token, setToken] = useState(null);
     const [questions, setQuestions] = useState(null);
+    const [pageQuestions, setPageQuestions] = useState(0);
     const [numberOfQuestionsTotal, setNumberOfQuestionsTotal] = useState(0);
     const [numberOfQuestionsNotAnswered, setNumberOfQuestionsNotAnswered] = useState(0);
 
@@ -25,6 +26,7 @@ export function InfoProvider({ children }) {
         <GlobalContext.Provider
             value={{
                 questions,
+                pageQuestions,
                 numberOfQuestionsTotal,
                 numberOfQuestionsNotAnswered,
                 isOpen,
@@ -34,6 +36,7 @@ export function InfoProvider({ children }) {
                 searchSpecificQuestions,
                 getQuestions,
                 setQuestions,
+                setPageQuestions,
                 setNumberOfQuestionsTotal,
                 setNumberOfQuestionsNotAnswered
             }}
