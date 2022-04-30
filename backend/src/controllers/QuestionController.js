@@ -125,7 +125,7 @@ module.exports = {
                     return { ...question._doc, author: author };
                 })
             );
-            const count = await QuestionModel.countDocuments();
+            const count = await QuestionModel.countDocuments({ wasAnswered: false });
             
             return res.json({
                 questions: questionsWithAuthor,

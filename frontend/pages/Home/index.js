@@ -59,6 +59,7 @@ export default function Home() {
       result = await getNotSolvedQuestions(1);
     }
     setQuestions(result?.questions || []);
+    setNumberOfQuestionsTotal(result?.count || 0);
   }
 
 
