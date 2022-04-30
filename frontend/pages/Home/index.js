@@ -2,11 +2,12 @@ import Head from 'next/head';
 import { useContext, useState, useEffect } from 'react';
 import { FiClock, FiArrowDownRight } from "react-icons/fi";
 import { MdLocalFireDepartment } from "react-icons/md";
+import { RiQuestionnaireLine } from "react-icons/ri";
 import { QuestionCard } from '../../components/QuestionCard';
 import ReactLoading from 'react-loading';
 import styles from '../../styles/pages/Home.module.css';
 import { GlobalContext } from '../../context/GlobalContext';
-import { getMostViewedQuestions, getOldestQuestions, getQuestions } from '../../services/requestsAPI/questions';
+import { getMostViewedQuestions, getNotSolvedQuestions, getOldestQuestions, getQuestions } from '../../services/requestsAPI/questions';
 import { InfiniteLoad } from '../../components/InfiniteLoad';
 
 export default function Home() {
@@ -19,7 +20,6 @@ export default function Home() {
     setQuestions,
     numberOfQuestionsTotal,
     setNumberOfQuestionsTotal,
-    setNumberOfQuestionsNotAnswered,
     pageQuestions,
     setPageQuestions,
   } = useContext(GlobalContext)
@@ -55,7 +55,10 @@ export default function Home() {
     else if (filterNumber === 3) {
       result = await getMostViewedQuestions(1);
     }
-    setQuestions(result.questions);
+    else if (filterNumber === 4) {
+      result = await getNotSolvedQuestions(1);
+    }
+    setQuestions(result?.questions || []);
   }
 
 
@@ -89,15 +92,19 @@ export default function Home() {
       <div className={styles.filterArea}>
         <button className={filter === 1 ? styles.selected : {}} onClick={() => changeFilter(1)}>
           <FiClock size={18} color="#000" />
-          <p>Recentes ({numberOfQuestionsTotal})</p>
+          <p>Recentes {filter === 1 && `(`+numberOfQuestionsTotal+`)`}</p>
         </button>
         <button className={filter === 2 ? styles.selected : {}} onClick={() => changeFilter(2)}>
           <FiArrowDownRight size={18} color="#000" />
-          <p>Antigos ({numberOfQuestionsTotal})</p>
+          <p>Antigos {filter === 2 && `(`+numberOfQuestionsTotal+`)`}</p>
         </button>
         <button className={filter === 3 ? styles.selected : {}} onClick={() => changeFilter(3)}>
           <MdLocalFireDepartment size={18} color="#000" />
-          <p>Vistos ({numberOfQuestionsTotal})</p>
+          <p>Mais vistos {filter === 3 && `(`+numberOfQuestionsTotal+`)`}</p>
+        </button>
+        <button className={filter === 4 ? styles.selected : {}} onClick={() => changeFilter(4)}>
+          <RiQuestionnaireLine size={18} color="#000" />
+          <p>Sem solução {filter === 4 && `(`+numberOfQuestionsTotal+`)`}</p>
         </button>
       </div>
 

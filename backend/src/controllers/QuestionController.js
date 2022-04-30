@@ -108,6 +108,35 @@ module.exports = {
         }
     },
 
+    // function to list all questions that was only wasAnswered = false
+    async listNotSolved(req, res) {
+        try {
+            const page = +req.query.page || 1;
+            const limit = +req.query.limit || 10;
+            const skip = (page - 1) * limit;
+
+            // get only questions that was not answered yet
+            const questions = await QuestionModel.find({ wasAnswered: false }).skip(skip).limit(limit).sort('-created');
+
+            // get the author of each question and include it in the questions
+            const questionsWithAuthor = await Promise.all(
+                questions.map(async (question) => {
+                    const author = await getUserByID(question.author);
+                    return { ...question._doc, author: author };
+                })
+            );
+            const count = await QuestionModel.countDocuments();
+            
+            return res.json({
+                questions: questionsWithAuthor,
+                count,
+            });
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+        }
+    },
+
+
     // function to list a specific question by id
     async listOne(req, res) {
         try {

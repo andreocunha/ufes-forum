@@ -29,6 +29,7 @@ routes.post('/questions', [ValidateToken, ValidateUser], QuestionController.crea
 routes.get('/questions', QuestionController.list);
 routes.get('/questions/oldest', QuestionController.listOldest);
 routes.get('/questions/mostViewed', QuestionController.listMostViewed);
+routes.get('/questions/notSolved', QuestionController.listNotSolved);
 routes.get('/questions/:id', QuestionController.listOne);
 routes.get('/questions/user/:name', QuestionController.listByAuthor);
 routes.get('/questions/tag/:tag', QuestionController.listByTag);

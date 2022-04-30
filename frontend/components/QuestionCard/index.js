@@ -45,10 +45,9 @@ export function QuestionCard(props) {
                 </Link>
             </div>
             
-            <a href={`/Question/${props.question._id}`} target="_blank" rel="noopener noreferrer" className={styles.question}>
+            <div className={styles.question}>
                 <div className={styles.question}>
                     <p className={styles.title}>{props.question.title}</p>
-                    {/* <p className={styles.description}>{props.question.description}</p> */}
 
                     <div className={styles.tags}>
                     {props.question.tags && 
@@ -60,7 +59,7 @@ export function QuestionCard(props) {
                     }
                     </div>
                 </div>
-            </a>
+            </div>
         </a>
     )
 }

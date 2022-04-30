@@ -39,6 +39,19 @@ export async function getMostViewedQuestions(page) {
   return result;
 }
 
+export async function getNotSolvedQuestions(page) {
+  const result = await fetch(`${process.env.API_URL}/questions/notSolved?page=${page}&limit=10`)
+    .then(res => res.json())
+    .then(data => {
+      return data;
+    })
+    .catch(err => {
+      console.log(err)
+      return null;
+    })
+  return result;
+}
+
 export async function getQuestionsByUser(page, userName) {
   const result = await fetch(`${process.env.API_URL}/questions/user/${userName}?page=${page}&limit=10`)
     .then(res => res.json())
@@ -155,7 +168,7 @@ export async function sendEmail(info) {
   }).then((res) => {
     console.log('Response received')
     if (res.status === 200) {
-      console.log(res.json());
+      // console.log(res.json());
       console.log('Response succeeded!')
     }
     else {
