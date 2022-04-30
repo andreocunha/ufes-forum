@@ -1,19 +1,25 @@
 import { erroMessage, shortSuccessMessage } from "../../utils/alerts"
 
 export async function loginUser(name, email, image){
-    const response = await fetch(`${process.env.API_URL}/users`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            name,
-            email,
-            image,
-        })
-    });
-    const data = await response.json();
-    return data;
+    try {
+        const response = await fetch(`${process.env.API_URL}/users`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name,
+                email,
+                image,
+            })
+        });
+        const data = await response.json();
+        return data;
+    }
+    catch (error) {
+        console.log(error);
+        // erroMessage("Error on loginUser");
+    }
 }
 
 export async function updateUserInfo(userID, token, github, linkedin, instagram, nickname) {

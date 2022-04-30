@@ -19,9 +19,9 @@ export function Header({children}) {
 
     useEffect( async () => {
         if(session) {
-            const response = await loginUser(session.user.name, session.user.email, session.user.image);
-            setToken(response.token);
-            localStorage.setItem('token', response.token);
+            const response = await loginUser(session?.user?.name, session?.user?.email, session?.user?.image);
+            setToken(response?.token);
+            localStorage.setItem('token', response?.token);
         }
       },[session])
 
@@ -46,7 +46,7 @@ export function Header({children}) {
                         </div>
                     </Link>
                     <div className={styles.login}> 
-                        <Image src={session.user.image} width="50px" height="50px" alt="Imagem de perfil" className={styles.imagePerfil}/>
+                        <Image src={session?.user?.image} width="50px" height="50px" alt="Imagem de perfil" className={styles.imagePerfil}/>
                         <div className={styles.dropdownContent}>
                             <Link href={`/Config`}>
                                 <p>Configurações</p>

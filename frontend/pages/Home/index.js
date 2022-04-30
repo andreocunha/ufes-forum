@@ -9,11 +9,12 @@ import styles from '../../styles/pages/Home.module.css';
 import { GlobalContext } from '../../context/GlobalContext';
 import { getMostViewedQuestions, getNotSolvedQuestions, getOldestQuestions, getQuestions } from '../../services/requestsAPI/questions';
 import { InfiniteLoad } from '../../components/InfiniteLoad';
+import { EmptyData } from '../../components/EmptyData';
 
 export default function Home() {
   const [filter, setFilter] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const [page, setPage] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     questions,
@@ -27,7 +28,9 @@ export default function Home() {
 
   useEffect(async () => {
     if (questions === null) {
+      setIsLoading(true);
       await getMorePost();
+      setIsLoading(false);
     }
   }, [])
 
@@ -44,7 +47,8 @@ export default function Home() {
     let result = [];
     setQuestions([]);
     setHasMore(true);
-    setPage(1); 
+    setPageQuestions(1); 
+    setNumberOfQuestionsTotal(0);
 
     if (filterNumber === 1) {
       result = await getQuestions(1);
@@ -58,13 +62,19 @@ export default function Home() {
     else if (filterNumber === 4) {
       result = await getNotSolvedQuestions(1);
     }
-    setQuestions(result?.questions || []);
+    setQuestions(result?.questions || null);
     setNumberOfQuestionsTotal(result?.count || 0);
   }
 
 
   const getMorePost = async () => {
     const response = await getQuestions(pageQuestions + 1);
+
+    console.log(response);
+
+    if (response === null) {
+      return;
+    }
 
     const result = response?.questions;
 
@@ -84,12 +94,8 @@ export default function Home() {
     }
   };
 
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>UfesFórum</title>
-      </Head>
-
+  const Filter = () => {
+    return (
       <div className={styles.filterArea}>
         <button className={filter === 1 ? styles.selected : {}} onClick={() => changeFilter(1)}>
           <FiClock size={18} color="#000" />
@@ -108,9 +114,29 @@ export default function Home() {
           <p>Sem solução {filter === 4 && `(`+numberOfQuestionsTotal+`)`}</p>
         </button>
       </div>
+    )
+  }
+
+  const LoadingPage = () => {
+    return (
+      <div className={styles.loadingArea}>
+        <ReactLoading type="spinningBubbles" color="gray" height={150} width={150} />
+      </div>
+    )
+  }
+
+  return (
+    <div className={styles.container}>
+      <Head>
+        <title>UfesFórum</title>
+      </Head>
+
+      <Filter />
+
+      { isLoading && <LoadingPage />}
 
       {
-        questions !== null ?
+        (questions !== null || questions?.length <= 0) ?
           <InfiniteLoad 
             dataLength={questions?.length}
             next={getMorePost}
@@ -121,9 +147,7 @@ export default function Home() {
             ))}
           </InfiniteLoad>
           :
-          <div className={styles.loadingArea}>
-            <ReactLoading type="spinningBubbles" color="gray" height={150} width={150} />
-          </div>
+          <EmptyData />
       }
     </div>
   )

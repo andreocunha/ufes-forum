@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import { EmptyData } from '../../components/EmptyData';
 import { SimpleUserCard } from '../../components/UserCard';
 import styles from '../../styles/pages/Users.module.css';
 
@@ -26,14 +27,18 @@ export default function Users(props){
                 <title>UfesFórum | Usuários</title>
             </Head>
             <div className={styles.main}>
-                { users.length > 0 && users.map((user, index) => (
+                { users.length > 0 ? 
+                users.map((user, index) => (
                     <Link key={index} href={`/QuestionsByUser/${user.name}`}>
                         <a className={styles.userCard}>
                             <SimpleUserCard data={user}/>
                             <p>Desde: {formatDataCreatedAt(user.created)}</p>
                         </a>
                     </Link>
-                ))}
+                ))
+                :
+                <EmptyData />
+            }
             </div>
         </div>
     )
