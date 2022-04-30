@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { SimpleUserCard } from '../../components/UserCard';
@@ -21,6 +22,9 @@ export default function Users(props){
 
     return (
         <div className={styles.container}>
+            <Head>
+                <title>UfesFórum | Usuários</title>
+            </Head>
             <div className={styles.main}>
                 { users.length > 0 && users.map((user, index) => (
                     <Link key={index} href={`/QuestionsByUser/${user.name}`}>

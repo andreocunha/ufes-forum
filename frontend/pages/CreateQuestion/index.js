@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 import Select from 'react-dropdown-select';
 import { createQuestion } from "../../services/requestsAPI/questions";
 import { handleUploadFile } from "../../services/requestsAPI/drive";
+import Head from "next/head";
 
 // import MdEditor from 'for-editor-markdown';
 // load dynamic import MdEditor
@@ -48,6 +49,10 @@ export default function CreateQuestion() {
 
     return (
         <div className={styles.container}>
+            <Head>
+                <title>UfesFórum | Criar Questão</title>
+            </Head>
+
             {!session ?
                 <></>
                 :

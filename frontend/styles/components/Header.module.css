@@ -19,9 +19,27 @@
     margin-right: auto;
 }
 
-.imageUfes {
-    display: block;
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
     margin-right: auto;
+}
+
+.logo h4 {
+    color: #1682FD;
+    font-size: 1.1rem;
+    font-weight: 300;
+    font-family: 'Press Start 2P', cursive;
+    margin: 0;
+    padding: 0;
+}
+
+.logo:hover {
+    cursor: pointer;
+    transition: 0.2s;
+    filter: brightness(1.2);
 }
 
 .login {
@@ -109,7 +127,7 @@
         display: block;
     }
 
-    .imageUfes {
+    .logo {
         display: none;
     }
 }

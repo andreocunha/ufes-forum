@@ -4,6 +4,7 @@ import DarkModeToggle from "react-dark-mode-toggle";
 import styles from '../../styles/pages/Config.module.css'
 import { CompleteUserCard } from '../../components/UserCard';
 import { getSession } from "next-auth/client"
+import Head from 'next/head';
 
 export default function Config(props) {
     const { theme, setTheme } = useTheme()
@@ -28,6 +29,9 @@ export default function Config(props) {
 
     return (
         <div className={styles.container}>
+            <Head>
+                <title>UfesFórum | Configurações</title>
+            </Head>
             <div className={styles.theme}>
                 <p>Tema Escuro: </p>
                 <DarkModeToggle

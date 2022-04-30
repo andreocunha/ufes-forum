@@ -4,6 +4,7 @@ import styles from '../../styles/pages/Common.module.css';
 import { getSession } from "next-auth/client"
 import { getAnswersByUser } from "../../services/requestsAPI/answers";
 import { InfiniteLoad } from "../../components/InfiniteLoad";
+import Head from "next/head";
 
 export default function MyAnswers(props) {
     const [questions, setQuestions] = useState([]);
@@ -37,6 +38,9 @@ export default function MyAnswers(props) {
 
     return (
         <div className={styles.container}>
+            <Head>
+                <title>UfesFórum | Respostas</title>
+            </Head>
             {questions.length > 0 && 
             <div className={styles.main2}>
                 <InfiniteLoad 

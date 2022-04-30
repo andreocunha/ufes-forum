@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import Image from 'next/image';
 import { FiLogIn, FiLogOut, FiPlusCircle } from "react-icons/fi";
+import { FaCode } from "react-icons/fa";
 import { useSession, signIn, signOut } from 'next-auth/client';
 import styles from '../../styles/components/Header.module.css';
 import Link from 'next/link';
@@ -27,8 +28,12 @@ export function Header({children}) {
     return (
         <>
             <div className={styles.container}>
-                <div className={styles.imageUfes}>
-                    <Image src="/logo.png" alt="Logo do Solares" height="50%" width="100%"/>    
+                <div 
+                    className={styles.logo} 
+                    onClick={() => window.location.href = '/'}
+                >
+                    <FaCode size={30} color="#1682FD" style={{ marginRight: 10 }}/>
+                    <h4>UfesFórum</h4>
                 </div>
                 <div className={styles.hamburgerIcon}>
                     <Hamburger toggled={isOpen} toggle={setOpen}/>

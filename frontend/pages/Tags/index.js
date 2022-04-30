@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import styles from '../../styles/pages/Common.module.css';
@@ -11,6 +12,9 @@ export default function Tags(props){
 
     return (
         <div className={styles.container}>
+            <Head>
+                <title>UfesFórum | Tags</title>
+            </Head>
             <div className={styles.main}>
                 { tags.length > 0 && tags.map((tag, index) => (
                     <Link key={index} href={`/QuestionsByTag/${tag._id}`}>
