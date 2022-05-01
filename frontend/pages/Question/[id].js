@@ -8,6 +8,7 @@ import dynamic from "next/dynamic";
 import { sendEmail } from "../../services/requestsAPI/questions";
 import { submitNewAnswer } from "../../services/requestsAPI/answers";
 import { handleUploadFile } from "../../services/requestsAPI/drive";
+import { ChatCard } from "../../components/ChatCard";
 // import socket from "../../services/realtime/socketio";
 
 // import MdEditor from 'for-editor-markdown';
@@ -77,6 +78,8 @@ export default function Question(props) {
         <div className={styles.container}>
             <CompleteQuestionCard question={question} />
             {/* <button onClick={emitMsgTest}>Teste</button> */}
+
+            {/* <ChatCard /> */}
 
             { question?.answers?.length > 0 &&
                 question?.answers.map((answer, index) => (
