@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import stc from 'string-to-color';
 import styles from '../../styles/components/ChatCard.module.css';
 
 export function ChatCard(){
@@ -28,14 +29,32 @@ export function ChatCard(){
     },
     {
       id: 4,
-      nickname: 'Bruna',
+      nickname: 'Bruna da Silva Souza',
       image: 'https://avatars2.githubusercontent.com/u/17098477?s=460&u=f9f8b8f8f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9&v=4',
       message: 'Good too!',
+      date: '2020-05-01T12:00:00.000Z'
+    },
+    {
+      id: 5,
+      nickname: 'João Almeida',
+      image: 'https://avatars2.githubusercontent.com/u/17098477?s=460&u=f9f8b8f8f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9&v=4',
+      message: 'Salve',
+      date: '2020-05-01T12:00:00.000Z'
+    },
+    {
+      id: 6,
+      nickname: 'Artur Oliveira Cunha ',
+      image: 'https://avatars2.githubusercontent.com/u/17098477?s=460&u=f9f8b8f8f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9&v=4',
+      message: 'Fala pessoal',
       date: '2020-05-01T12:00:00.000Z'
     },
   ])
 
   function newMessage(){
+    if(message === ''){
+      return;
+    }
+
     // add new message to the messageExample
     const newMessage = {
       id: messageExample.length + 1,
@@ -47,7 +66,8 @@ export function ChatCard(){
     }
 
     setMessageExample([...messageExample, newMessage])
-    setMessage('');
+    // remove the message from the input
+    setMessage('')
 
     // scroll the chat area up
     const chatArea = document.getElementById('chat');
@@ -70,8 +90,8 @@ export function ChatCard(){
               className={styles.messageHeader}
               style={message.nickname === 'Andre' ? { display: 'none' } : {}}
             >
-              <img src={message.image} alt={message.nickname} width="30px" height="30px" />
-              <span>{message.nickname}</span>
+              <img src={message.image} alt={message.nickname} width="20px" height="20px" />
+              <span style={{ color: stc(message.nickname) }}>{message.nickname}</span>
             </div>
             <p>{message.message}</p>
             <span className={styles.time}>{
@@ -93,8 +113,14 @@ export function ChatCard(){
           onChange={e => setMessage(e.target.value)}
           // on press enter
           onKeyPress={e => {
-            if(e.key === 'Enter'){
+            // verify if the key is enter + shift
+            if(e.key === 'Enter' && e.shiftKey){
+              return;
+            }
+            else if(e.key === 'Enter'){
               newMessage();
+              // remove the enter
+              e.preventDefault();
             }
           }}
         />
