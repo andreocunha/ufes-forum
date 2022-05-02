@@ -5,11 +5,9 @@ import styles from '../../styles/pages/Question.module.css';
 import { getSession } from "next-auth/client"
 import { GlobalContext } from "../../context/GlobalContext";
 import dynamic from "next/dynamic";
-import { sendEmail } from "../../services/requestsAPI/questions";
 import { submitNewAnswer } from "../../services/requestsAPI/answers";
 import { handleUploadFile } from "../../services/requestsAPI/drive";
-import { ChatCard } from "../../components/ChatCard";
-// import socket from "../../services/realtime/socketio";
+// import { ChatCard } from "../../components/ChatCard";
 
 // import MdEditor from 'for-editor-markdown';
 // load dynamic import MdEditor
@@ -20,7 +18,6 @@ const MdEditor = dynamic(() => import('for-editor-markdown'), {
 export default function Question(props) {
     const [question, setQuestion] = useState([]);
     const [textAnswer, setTextAnswer] = useState('');
-    const [temporaryMsg, setTemporaryMsg] = useState([]);
 
     const {
         token
@@ -44,42 +41,12 @@ export default function Question(props) {
         setQuestion(theQuestion);
     }, [props.question]);
 
-    // useEffect(() => {
-    //     // console.log(props.question)
-    //     setQuestion(props.question)
-
-    //     socket.emit('newUser', { 
-    //         nickname: 'Andre',
-    //         image: 'https://avatars2.githubusercontent.com/u/17098477?s=460&u=f9f8b8f8f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9&v=4'
-    //     }, props.question.id);
-
-    //     socket.on('allUsersForum', data => {
-    //         console.log(data)
-    //     })
-
-    //     socket.on('allMessages', data => {
-    //         // console.log(data)
-    //         let vectorTemporaryMsg = temporaryMsg
-    //         vectorTemporaryMsg.push(data);
-    //         setTemporaryMsg(vectorTemporaryMsg);
-    //         console.log(vectorTemporaryMsg)
-    //     })
-
-    //     socket.on('allUsersInQuestion', data => {
-    //         console.log(data)
-    //     })
-    // },[])
-
-    // function emitMsgTest() {
-    //     socket.emit('newMessage', 'Hello world', props.question.id);
-    // }
-
     return (
         <div className={styles.container}>
             <CompleteQuestionCard question={question} />
             {/* <button onClick={emitMsgTest}>Teste</button> */}
 
-            {/* <ChatCard /> */}
+            {/* <ChatCard questionID={props?.question?.id} /> */}
 
             { question?.answers?.length > 0 &&
                 question?.answers.map((answer, index) => (

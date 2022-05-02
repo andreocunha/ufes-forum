@@ -1,7 +1,7 @@
 class User {
-  constructor (id, nickname, image) {
+  constructor (id, name, image) {
     this.id = id;
-    this.nickname = nickname;
+    this.name = name;
     this.image = image;
   }
 }

@@ -16,7 +16,7 @@ io.on("connection", socket => {
 
   // quando um usuario novo se conecta no forum
   socket.on('newUser', (userInfo, url) => {
-    const user = new User(socket.id, userInfo.nickname, userInfo.image);
+    const user = new User(socket.id, userInfo.name, userInfo.image);
     forum.addUser(user);
     forum.addUserInQuestion(user, url);
     socket.join(url);
@@ -27,13 +27,13 @@ io.on("connection", socket => {
   });
 
   // quando um usuario envia uma mensagem
-  socket.on('newMessage', async (msg, url) => {
+  socket.on('clientMessage', async (msg, url) => {
     const user = await forum.getUser(socket.id);
     console.log(url)
 
-    io.to(url).emit("allMessages", 
+    io.to(url).emit("serverMessage", 
       {
-        msg: msg,
+        message: msg,
         date: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }), // add the date formated to HH:MM
         user: user
       }

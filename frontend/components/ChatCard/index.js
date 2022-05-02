@@ -1,72 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import stc from 'string-to-color';
+import socket from '../../services/realtime/socketio';
 import styles from '../../styles/components/ChatCard.module.css';
 
-export function ChatCard(){
+export function ChatCard({ questionID }) {
+  const [name, setName] = useState('');
   const [message, setMessage] = useState('');
+  const [temporaryMsg, setTemporaryMsg] = useState([]);
 
-  const [messageExample, setMessageExample] = useState ([
-    {
-      id: 1,
-      nickname: 'Andre',
-      image: 'https://avatars2.githubusercontent.com/u/17098477?s=460&u=f9f8b8f8f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9&v=4',
-      message: 'Hello, how are you?',
-      date: '2020-05-01T12:00:00.000Z'
-    },
-    {
-      id: 2,
-      nickname: 'Bruna',
-      image: 'https://avatars2.githubusercontent.com/u/17098477?s=460&u=f9f8b8f8f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9&v=4',
-      message: 'Hello, how are you?',
-      date: '2020-05-01T12:00:00.000Z'
-    },
-    {
-      id: 3,
-      nickname: 'Andre',
-      image: 'https://avatars2.githubusercontent.com/u/17098477?s=460&u=f9f8b8f8f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9&v=4',
-      message: 'Good!',
-      date: '2020-05-01T12:00:00.000Z'
-    },
-    {
-      id: 4,
-      nickname: 'Bruna da Silva Souza',
-      image: 'https://avatars2.githubusercontent.com/u/17098477?s=460&u=f9f8b8f8f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9&v=4',
-      message: 'Good too!',
-      date: '2020-05-01T12:00:00.000Z'
-    },
-    {
-      id: 5,
-      nickname: 'João Almeida',
-      image: 'https://avatars2.githubusercontent.com/u/17098477?s=460&u=f9f8b8f8f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9&v=4',
-      message: 'Salve',
-      date: '2020-05-01T12:00:00.000Z'
-    },
-    {
-      id: 6,
-      nickname: 'Artur Oliveira Cunha ',
-      image: 'https://avatars2.githubusercontent.com/u/17098477?s=460&u=f9f8b8f8f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9&v=4',
-      message: 'Fala pessoal',
-      date: '2020-05-01T12:00:00.000Z'
-    },
-  ])
+  useEffect( async () => {
+
+    let userName = 'Andre' + Math.floor(Math.random() * 100);
+    setName(userName);
+
+    socket.emit('newUser', { 
+        name: userName,
+        image: 'https://avatars2.githubusercontent.com/u/17098477?s=460&u=f9f8b8f8f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9&v=4'
+    }, questionID);
+
+    socket.on('allUsersForum', data => {
+        console.log(data)
+    })
+
+    socket.on('serverMessage', data => {
+      // console.log(data)
+      setTemporaryMsg(temporaryMsg => [...temporaryMsg, data]);
+      // scroll the chat area up
+      const chatArea = document.getElementById('chat');
+      chatArea.scrollTop = chatArea.scrollHeight;
+    })
+
+    socket.on('allUsersInQuestion', data => {
+        console.log(data)
+    })
+  },[])
 
   function newMessage(){
     if(message === ''){
       return;
     }
-
-    // add new message to the messageExample
-    const newMessage = {
-      id: messageExample.length + 1,
-      nickname: 'Andre',
-      image: 'https://avatars2.githubusercontent.com/u/17098477?s=460&u=f9f8b8f8f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9&v=4',
-      message: message,
-      // get the current date
-      date: new Date().toISOString()
-    }
-
-    setMessageExample([...messageExample, newMessage])
-    // remove the message from the input
+    socket.emit('clientMessage', message, questionID);
     setMessage('')
 
     // scroll the chat area up
@@ -80,27 +53,21 @@ export function ChatCard(){
         className={styles.messageArea}
         id="chat"
       >
-        {messageExample.map(message => (
+        {temporaryMsg.map((message, index) => (
           <div 
             className={styles.message} 
-            key={message.id}
-            style={message.nickname === 'Andre' ? { alignSelf: 'flex-end'} : {}}
+            key={index}
+            style={message?.user?.name === name ? { alignSelf: 'flex-end'} : {}}
           >
             <div 
               className={styles.messageHeader}
-              style={message.nickname === 'Andre' ? { display: 'none' } : {}}
+              style={message?.user?.name === name ? { display: 'none' } : {}}
             >
-              <img src={message.image} alt={message.nickname} width="20px" height="20px" />
-              <span style={{ color: stc(message.nickname) }}>{message.nickname}</span>
+              <img src={message?.user?.image} alt={message?.user?.name} width="20px" height="20px" />
+              <span style={{ color: stc(message?.user?.name) }}>{message?.user?.name}</span>
             </div>
-            <p>{message.message}</p>
-            <span className={styles.time}>{
-              // data with only hours and minutes
-              new Date(message.date).toLocaleTimeString('pt-BR', {
-                hour: '2-digit',
-                minute: '2-digit'
-              })
-            }</span>
+            <p>{message?.message}</p>
+            <span className={styles.time}>{message?.date}</span>
           </div>
         ))}
       </div>
