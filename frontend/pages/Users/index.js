@@ -11,11 +11,32 @@ export default function Users(props){
     // get the date createAt and convert to DD/MM/YYYY
     function formatDataCreatedAt(date){
         let dateCreatedAt = new Date(date);
-        let dateFormatted = dateCreatedAt.getDate() + '/' + (dateCreatedAt.getMonth() + 1) + '/' + dateCreatedAt.getFullYear();
-        return dateFormatted;
+        // format the date to DD/MM/YYYY 2 digits for day and month
+        let day = dateCreatedAt.getDate() < 10 ? '0' + dateCreatedAt.getDate() : dateCreatedAt.getDate();
+        let month = dateCreatedAt.getMonth() + 1 < 10 ? '0' + (dateCreatedAt.getMonth() + 1) : dateCreatedAt.getMonth() + 1;
+        let year = dateCreatedAt.getFullYear();
+        return `${day}/${month}/${year}`;
     }
         
-        
+    // function to search users by name or date created
+    function searchUsers(e){
+        let search = e.target.value;
+        let users = props.users;
+        let usersSearch = [];
+        // if the search is empty, show all users
+        if(search === ''){
+            setUsers(users);
+        }
+        // if the search is not empty, search users by name or date created
+        else{
+            users.forEach(user => {
+                if(user.name.toLowerCase().includes(search.toLowerCase()) || formatDataCreatedAt(user.created).includes(search)){
+                    usersSearch.push(user);
+                }
+            });
+            setUsers(usersSearch);
+        }
+    }
 
     useEffect(() => {
         setUsers(props.users)
@@ -27,8 +48,12 @@ export default function Users(props){
                 <title>UfesFórum | Usuários</title>
             </Head>
             <div className={styles.main}>
-                { users.length > 0 ? 
-                users.map((user, index) => (
+                <div className={styles.search}>
+                    <input type="text" placeholder="Pesquisar por nome ou data" onChange={searchUsers}/>
+                    <h1>Total: {users?.length}</h1>
+                </div>
+                { users?.length > 0 ? 
+                users?.map((user, index) => (
                     <Link key={index} href={`/QuestionsByUser/${user.name}`}>
                         <a className={styles.userCard}>
                             <SimpleUserCard data={user}/>
