@@ -48,6 +48,8 @@
     align-items: center;
     justify-content: space-between;
     position: relative;
+    height: 50px;
+    min-width: 50px;
 }
 
 .button {
@@ -128,6 +130,14 @@
     }
 
     .logo {
+        display: none;
+    }
+
+    .button {
+        width: 40px;
+    }
+
+    .button p {
         display: none;
     }
 }

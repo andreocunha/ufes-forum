@@ -7,7 +7,7 @@ import { GlobalContext } from "../../context/GlobalContext";
 import dynamic from "next/dynamic";
 import { submitNewAnswer } from "../../services/requestsAPI/answers";
 import { handleUploadFile } from "../../services/requestsAPI/drive";
-// import { ChatCard } from "../../components/ChatCard";
+import { ChatCard } from "../../components/ChatCard";
 
 // import MdEditor from 'for-editor-markdown';
 // load dynamic import MdEditor
@@ -20,7 +20,8 @@ export default function Question(props) {
     const [textAnswer, setTextAnswer] = useState('');
 
     const {
-        token
+        token,
+        showChat,
     } = useContext(GlobalContext)
 
     useEffect(() => {
@@ -44,9 +45,8 @@ export default function Question(props) {
     return (
         <div className={styles.container}>
             <CompleteQuestionCard question={question} />
-            {/* <button onClick={emitMsgTest}>Teste</button> */}
 
-            {/* <ChatCard questionID={props?.question?.id} /> */}
+            <ChatCard questionID={props?.question?.id} />
 
             { question?.answers?.length > 0 &&
                 question?.answers.map((answer, index) => (

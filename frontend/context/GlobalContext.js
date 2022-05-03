@@ -9,6 +9,7 @@ export function InfoProvider({ children }) {
     const [questions, setQuestions] = useState(null);
     const [pageQuestions, setPageQuestions] = useState(0);
     const [numberOfQuestionsTotal, setNumberOfQuestionsTotal] = useState(0);
+    const [showChat, setShowChat] = useState(false);
 
     async function searchSpecificQuestions(search) {
         if(search.length >= 2) {
@@ -29,6 +30,7 @@ export function InfoProvider({ children }) {
                 numberOfQuestionsTotal,
                 isOpen,
                 token,
+                showChat,
                 setOpen,
                 setToken,
                 searchSpecificQuestions,
@@ -36,6 +38,7 @@ export function InfoProvider({ children }) {
                 setQuestions,
                 setPageQuestions,
                 setNumberOfQuestionsTotal,
+                setShowChat,
             }}
         >
             {children}

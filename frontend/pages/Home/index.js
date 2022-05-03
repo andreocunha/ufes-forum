@@ -70,7 +70,7 @@ export default function Home() {
   const getMorePost = async () => {
     const response = await getQuestions(pageQuestions + 1);
 
-    console.log(response);
+    // console.log(response);
 
     if (response === null) {
       return;

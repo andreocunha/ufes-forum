@@ -44,7 +44,7 @@ class Forum {
   removeUser(user) {
     this.users = this.users.filter(u => u !== user);
     // find all the questions that the user is in
-    const questions = this.usersQuestions.filter(q => q.users.find(u => u.id === user.id));
+    const questions = this.usersQuestions.filter(q => q.users.find(u => u.id === user?.id));
     // remove the user from the questions
     questions.forEach(q => {
       q.users = q.users.filter(u => u !== user);

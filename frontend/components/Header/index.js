@@ -8,6 +8,7 @@ import Link from 'next/link';
 import Hamburger from 'hamburger-react';
 import { GlobalContext } from '../../context/GlobalContext';
 import { loginUser } from '../../services/requestsAPI/users';
+import { PeopleOnlineCard } from '../PeopleOnlineCard';
 
 export function Header({children}) {
     const [session] = useSession();
@@ -22,6 +23,7 @@ export function Header({children}) {
             const response = await loginUser(session?.user?.name, session?.user?.email, session?.user?.image);
             setToken(response?.token);
             localStorage.setItem('token', response?.token);
+            localStorage.setItem('user', JSON.stringify(session?.user));
         }
       },[session])
 
@@ -38,6 +40,7 @@ export function Header({children}) {
                 <div className={styles.hamburgerIcon}>
                     <Hamburger toggled={isOpen} toggle={setOpen}/>
                 </div>
+                <PeopleOnlineCard />
                 {session && 
                 <>
                     <Link href="/CreateQuestion">

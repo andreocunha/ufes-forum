@@ -13,6 +13,7 @@ const forum = new Forum();
 
 io.on("connection", socket => {
   console.log("USUARIO: " + socket.id);
+  
 
   // quando um usuario novo se conecta no forum
   socket.on('newUser', (userInfo, url) => {
@@ -24,6 +25,14 @@ io.on("connection", socket => {
 
     // emit all users in the question url
     socket.to(url).emit('allUsersInQuestion', forum.getAllUsersInQuestion(url));
+  });
+
+  socket.on('getUsersByUrl', (url) => {
+    console.log(url)
+    // wait for 2 seconds to simulate a delay
+    setTimeout(() => {
+      socket.emit('allUsersInQuestion', forum.getAllUsersInQuestion(url));
+    }, 2000);
   });
 
   // quando um usuario envia uma mensagem

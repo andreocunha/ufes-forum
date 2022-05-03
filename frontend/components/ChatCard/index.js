@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import stc from 'string-to-color';
+import { GlobalContext } from '../../context/GlobalContext';
 import socket from '../../services/realtime/socketio';
 import styles from '../../styles/components/ChatCard.module.css';
 
@@ -8,30 +9,38 @@ export function ChatCard({ questionID }) {
   const [message, setMessage] = useState('');
   const [temporaryMsg, setTemporaryMsg] = useState([]);
 
+  const {
+    showChat,
+  } = useContext(GlobalContext)
+
   useEffect( async () => {
+    const defaultUser = {
+      name: 'Anônimo' + Math.floor(Math.random() * 10000),
+      image: `https://secure.gravatar.com/avatar/${Math.floor(Math.random() * 10000)}?s=90&d=identicon`
+    }
 
-    let userName = 'Andre' + Math.floor(Math.random() * 100);
-    setName(userName);
+    const user = JSON.parse(localStorage.getItem('user')) || defaultUser;
+    // const userName = user || 'Anônimo' + Math.floor(Math.random() * 10000);
 
-    socket.emit('newUser', { 
-        name: userName,
-        image: 'https://avatars2.githubusercontent.com/u/17098477?s=460&u=f9f8b8f8f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9&v=4'
-    }, questionID);
+    setName(user?.name);
+
+    socket.emit('newUser', user, questionID);
 
     socket.on('allUsersForum', data => {
-        console.log(data)
+        // console.log(data)
     })
 
     socket.on('serverMessage', data => {
       // console.log(data)
       setTemporaryMsg(temporaryMsg => [...temporaryMsg, data]);
+      
       // scroll the chat area up
-      const chatArea = document.getElementById('chat');
-      chatArea.scrollTop = chatArea.scrollHeight;
+      const chatArea = document?.getElementById('chat');
+      chatArea?.scrollTop = chatArea?.scrollHeight;
     })
 
     socket.on('allUsersInQuestion', data => {
-        console.log(data)
+        // console.log(data)
     })
   },[])
 
@@ -45,6 +54,10 @@ export function ChatCard({ questionID }) {
     // scroll the chat area up
     const chatArea = document.getElementById('chat');
     chatArea.scrollTop = chatArea.scrollHeight;
+  }
+
+  if(!showChat){
+    return null;
   }
 
   return (
