@@ -36,7 +36,9 @@ export function ChatCard({ questionID }) {
       
       // scroll the chat area up
       const chatArea = document?.getElementById('chat');
-      chatArea?.scrollTop = chatArea?.scrollHeight;
+      if(chatArea) {
+        chatArea.scrollTop = chatArea?.scrollHeight;
+      }
     })
 
     socket.on('allUsersInQuestion', data => {
