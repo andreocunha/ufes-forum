@@ -50,9 +50,19 @@ export function PeopleOnlineCard() {
             <img
               src={person.image}
               alt={person.name}
+              className={styles.image}
             />
+            <div className={styles.tooltip}>
+              <p className={styles.tooltiptext}>{person.name}</p>
+            </div>
+          </div>          
+          ))
+        }
+        {peopleOnline?.length > 3 &&
+          <div className={styles.morePeople}>
+            <p>+{peopleOnline.length - 3}</p>
           </div>
-      ))}
+        }
       </div>
 
       {

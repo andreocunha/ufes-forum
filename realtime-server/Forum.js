@@ -61,7 +61,7 @@ class Forum {
 
   getAllUsersInQuestion(urlQuestion) {
     const question = this.usersQuestions.find(q => q.urlQuestion === urlQuestion);
-    return question.users;
+    return question?.users || [];
   }
 }
 

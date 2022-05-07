@@ -15,7 +15,7 @@
 .peopleArea {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-end;
   width: 100%;
   max-width: 200px;
@@ -25,14 +25,77 @@
 .person {
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-direction: column;
   height: 100%;
 }
 
-.person img {
+.image {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  margin-right: 0.2rem;
+  z-index: -1;
+  margin-left: -12px;
+  border: 3px solid #EAEAEA;
+  box-shadow: 1px 0px 5px 1px var(--border-color);
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext::after {
+  content: " ";
+  position: absolute;
+  bottom: 100%;  /* At the top of the tooltip */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #1c6ee9e2 transparent;
+}
+
+.tooltip {
+  visibility: hidden;
+  width: 120px;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #1c6ee9e2;
+  color: #FFFFFF;
+  font-size: 0.8rem;
+  font-weight: 300;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.person:hover .tooltiptext {
+  visibility: visible;
+}
+
+.morePeople {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  z-index: -1;
+  margin-left: -12px;
+  background-color: gray;
 }
 
 .chat {
@@ -40,6 +103,7 @@
   flex-direction: row;
   align-items: flex-end;
   transition: 0.2s;
+  margin-left: 0.5rem;
 }
 
 .chat:hover {

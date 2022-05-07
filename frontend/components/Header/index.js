@@ -27,6 +27,13 @@ export function Header({children}) {
         }
       },[session])
 
+    function logout() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        setToken('');
+        signOut();
+    }
+
     return (
         <>
             <div className={styles.container}>
@@ -54,7 +61,7 @@ export function Header({children}) {
                             <Link href={`/Config`}>
                                 <p>Configurações</p>
                             </Link>
-                            <p onClick={() => signOut()} className={styles.sair}>Sair <FiLogOut size="1rem"/></p>
+                            <p onClick={() => logout()} className={styles.sair}>Sair <FiLogOut size="1rem"/></p>
                         </div>
                     </div>
                 </>

@@ -76,7 +76,7 @@ export function ChatCard({ questionID }) {
           >
             <div 
               className={styles.messageHeader}
-              style={message?.user?.name === name ? { display: 'none' } : {}}
+              // style={message?.user?.name === name ? { display: 'none' } : {}}
             >
               <img src={message?.user?.image} alt={message?.user?.name} width="20px" height="20px" />
               <span style={{ color: stc(message?.user?.name) }}>{message?.user?.name}</span>
@@ -106,7 +106,7 @@ export function ChatCard({ questionID }) {
             }
           }}
         />
-        <button className={styles.button} onClick={newMessage}>Enviar</button>
+        {message && <button className={styles.button} onClick={newMessage}>Enviar</button>}
       </div>
     </div>
   );

@@ -38,12 +38,15 @@ io.on("connection", socket => {
   // quando um usuario envia uma mensagem
   socket.on('clientMessage', async (msg, url) => {
     const user = await forum.getUser(socket.id);
-    console.log(url)
+    // console.log(url)
+
+    let date_ob = new Date()
+    let time = date_ob.toLocaleString('en-GB',  { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute:'2-digit'})
 
     io.to(url).emit("serverMessage", 
       {
         message: msg,
-        date: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }), // add the date formated to HH:MM
+        date: time,
         user: user
       }
     );
