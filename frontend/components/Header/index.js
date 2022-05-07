@@ -69,8 +69,9 @@ export function Header({children}) {
 
                 {!session && 
                     <div onClick={() => signIn("google")} className={styles.logout}>
-                        <p>Entrar</p>
-                        <FiLogIn color="var(--text-color)" size="1.2rem"/>
+                        <img src="/google.png" alt="Google" width="30px" height="30px"/>
+                        <p>Login com Google</p>
+                        {/* <FiLogIn color="var(--text-color)" size="1.2rem"/> */}
                     </div>} 
             </div>
             {children}
