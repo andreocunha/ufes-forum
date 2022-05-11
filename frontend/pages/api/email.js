@@ -30,7 +30,7 @@ export default async function handler(req, res){
     from: process.env.EMAIL,
     to: userQuestionEmail,
     subject: title,
-    text: `Olá ${userQuestion},\n\n${userAnswer} respondeu a sua questão.\n\nAcesse o link abaixo para visualizar:\n\n${url}`
+    text: `Olá ${userQuestion},\n\n$Você recebeu uma resposta na sua questão sobre "${title}".\n\nAcesse o link abaixo para visualizar:\n\n${url}`
   };
   
   transporter.sendMail(mailOptions, function(error, info){
