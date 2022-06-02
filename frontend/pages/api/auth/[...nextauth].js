@@ -12,7 +12,8 @@ const options = {
         async signIn(user, account, profile) {
           if (account.provider === 'google' &&
               profile.verified_email === true &&
-              profile.email.endsWith('@edu.ufes.br')) {
+              (profile.email.endsWith('@edu.ufes.br')
+              || profile.email.endsWith('@ufes.br'))) {
             return true
           } else {
             return false
