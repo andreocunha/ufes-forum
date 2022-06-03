@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import styles from '../../styles/components/AnswerCard.module.css';
 import { SimpleUserCard } from "../UserCard";
 import { FiTrash } from "react-icons/fi";
@@ -16,6 +16,10 @@ export function AnswerCard(props){
     const {
         token
     } = useContext(GlobalContext);
+
+    const colorTheme = {
+        color: '#000000',
+    };
 
     return (
         <div className={styles.container} style={ props?.answer?.isSolution ? { borderLeft: '8px solid #06BA2B' } : {}}>
@@ -42,9 +46,13 @@ export function AnswerCard(props){
                     />
                 }
             </div>
-            <div className={styles.answer}>
+            <div className={styles.answer} data-color-mode="dark">
                 {/* <p className={styles.description}>{props?.answer?.text}</p> */}
-                <MarkdownPreview source={props?.answer?.text} style={{ width: '100%', height: '100%' }} />
+                <MarkdownPreview 
+                    source={props?.answer?.text} 
+                    style={{ width: '100%', height: '100%', ...colorTheme }} 
+                    
+                />
             </div>
         </div>
     )
