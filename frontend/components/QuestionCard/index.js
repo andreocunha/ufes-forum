@@ -71,7 +71,7 @@ export function CompleteQuestionCard(props) {
             <div className={styles.topContainer}>
                 <SimpleUserCard data={props.question.author} created={props.question.created}/>
                 {props?.question?.author?.role == 'admin' && 
-                    <SimpleMenuList id={props.question.id} type="question" />
+                    <SimpleMenuList questionId={props.question.id} type="question" />
                 }
             </div>
             <div className={styles.question} style={{ cursor: 'default' }}>
@@ -86,17 +86,6 @@ export function CompleteQuestionCard(props) {
                     ))
                 }
                 </div>
-                {/* <div className={styles.comments}>
-                    <p>Mostrar comentários (3)</p>
-                    <p>Comentar</p>
-                    {props.question.comments &&
-                        props.question.comments.map((comment, index) => (
-                            <div key={index} className={styles.comment}>
-                                <p>{comment.text}</p>
-                            </div>
-                        ))
-                    }
-                </div> */}
             </div>
         </div>
     )

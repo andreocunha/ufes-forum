@@ -6,6 +6,7 @@ import { GiCheckMark } from "react-icons/gi";
 import { GlobalContext } from "../../context/GlobalContext";
 import dynamic from "next/dynamic";
 import { deleteAnswer, updateStatusSolution } from '../../services/requestsAPI/answers';
+import { SimpleMenuList } from "../SimpleMenuList";
 
 // load dynamic import MarkdownPreview
 const MarkdownPreview = dynamic(() => import('@uiw/react-markdown-preview'), {
@@ -18,7 +19,7 @@ export function AnswerCard(props){
     } = useContext(GlobalContext);
 
     const colorTheme = {
-        color: '#000000',
+        color: '#9e9e9e',
     };
 
     return (
@@ -38,12 +39,13 @@ export function AnswerCard(props){
             <div className={styles.user}>
                 <SimpleUserCard data={props?.answer?.author} created={props?.answer?.created} />
                 {props?.answer?.author?.role == 'admin' && 
-                    <FiTrash 
-                        className={styles.icons} 
-                        size={18} 
-                        color="var(--text-color)" 
-                        onClick={ async () => await deleteAnswer(props.questionID, props.answer.id, token)}
-                    />
+                    <SimpleMenuList questionId={props.questionID} answerId={props.answer.id} type="answer"/>
+                    // <FiTrash 
+                    //     className={styles.icons} 
+                    //     size={18} 
+                    //     color="var(--text-color)" 
+                    //     onClick={ async () => await deleteAnswer(props.questionID, props.answer.id, token)}
+                    // />
                 }
             </div>
             <div className={styles.answer} data-color-mode="dark">

@@ -8,8 +8,9 @@ import { deleteQuestion } from "../../services/requestsAPI/questions";
 import { GlobalContext } from "../../context/GlobalContext";
 import { shortSuccessMessage } from '../../utils/alerts';
 import { useRouter } from 'next/router';
+import { deleteAnswer } from '../../services/requestsAPI/answers';
 
-export function SimpleMenuList({ id, type }) {
+export function SimpleMenuList({ questionId, answerId, type }) {
   const {
     token
   } = useContext(GlobalContext)
@@ -24,14 +25,35 @@ export function SimpleMenuList({ id, type }) {
   }
 
   function goToEditTopic() {
+    if(type === 'question') {
     router.push({
       pathname: 'EditTopic',
       query: {
-        id: id,
+        id: questionId,
         type: type 
       }
     })
+    }
+    else {
+      router.push({
+        pathname: 'EditTopic',
+        query: {
+          questionId: questionId,
+          answerId: answerId,
+          type: type
+        }
+      })
+    }
   }
+
+  async function deleteTopic() {
+    if(type === 'question') {
+      await deleteQuestion(questionId, token);
+    }
+    else {
+      deleteAnswer(questionId, answerId, token);
+    }
+  }    
 
   return (
     <DropdownMenu
@@ -51,7 +73,7 @@ export function SimpleMenuList({ id, type }) {
         <a onClick={() => copyLinkToPasteboard()}>
           <p>Copiar Link</p>
         </a>
-        <a onClick={ async () => await deleteQuestion(id, token)}>
+        <a onClick={ async () => await deleteTopic()}>
           <p>Deletar</p>
         </a>
       </DropdownItemGroup>

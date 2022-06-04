@@ -20,7 +20,7 @@ export async function deleteAnswer(questionID, answerID, token) {
         }
     });
     if (response.status === 200 || response.status === 201) {
-        await successMessage('Questão deletada!', 'Resposta deletada com sucesso!', 1500);
+        await successMessage('Resposta deletada!', 'Resposta deletada com sucesso!', 1500);
         window.location.reload();
     }
     else {

@@ -40,6 +40,7 @@ export default function Question(props) {
 
         theQuestion.answers = sortedQuestions;
         setQuestion(theQuestion);
+
     }, [props.question]);
 
     return (

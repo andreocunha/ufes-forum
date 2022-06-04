@@ -16,7 +16,7 @@ const MdEditor = dynamic(() => import('for-editor-markdown'), {
 });
 
 
-export default function EditTopic({ infos, type }) {
+export default function EditTopic({ infos, type, questionId, answerId }) {
     const [category, setCategory] = useState([]);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -46,7 +46,8 @@ export default function EditTopic({ infos, type }) {
         else {
             // setCategory(infos.category);
             // setTitle(infos.title);
-            // setDescription(infos.description);
+            setDescription(infos.text);
+            // console.log(infos);
         }
 
     }, []);
@@ -55,7 +56,7 @@ export default function EditTopic({ infos, type }) {
         if(type === 'question'){
             await updateQuestion(category, title, description, token, infos.id);
         }else{
-            await updateAnswer(question.id, answer.id, token, description);
+            await updateAnswer(questionId, answerId, token, description);
         }
     }
 
@@ -139,10 +140,10 @@ export const getServerSideProps = async (context) => {
     }
 
     // get the id and type from params (url)
-    const { id, type } = context.query;
+    const { questionId, answerId, type } = context.query;
     
     if(type === 'question'){
-        await fetch(`${process.env.API_URL}/questions/${id}`,{
+        await fetch(`${process.env.API_URL}/questions/${questionId}`,{
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -156,7 +157,7 @@ export const getServerSideProps = async (context) => {
         .catch(err => console.log(err))
     }
     else{
-        await fetch(`${process.env.API_URL}/questions/${id}`,{
+        await fetch(`${process.env.API_URL}/answer/${questionId}/${answerId}`,{
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -165,7 +166,7 @@ export const getServerSideProps = async (context) => {
         })
         .then(res => res.json())
         .then(data => {
-            question = data;
+            infos = data;
         })
         .catch(err => console.log(err))
     }
@@ -173,7 +174,9 @@ export const getServerSideProps = async (context) => {
     return {
         props: {
             infos,
-            type
+            type,
+            questionId,
+            answerId
         }
     }
 }
