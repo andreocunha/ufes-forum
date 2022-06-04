@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 
 export default async function handler(req, res){
   // informações do body
-  const { title, userQuestion, userQuestionEmail, userAnswer, url } = req.body;
+  const { title, userQuestion, userQuestionEmail, userAnswer, url, emails } = req.body;
 
   // cria um objeto de transporte para o envio de e-mails
   const transporter = nodemailer.createTransport({
@@ -30,7 +30,7 @@ export default async function handler(req, res){
     from: process.env.EMAIL,
     to: userQuestionEmail,
     subject: title,
-    text: `Olá ${userQuestion},\n\n${userAnswer} respondeu a sua questão.\n\nAcesse o link abaixo para visualizar:\n\n${url}`
+    text: `Olá ${userQuestion},\n\nO seu tópico recebeu uma resposta.\n\nAcesse o link abaixo para visualizar:\n\n${url}`
   };
   
   transporter.sendMail(mailOptions, function(error, info){

@@ -18,6 +18,7 @@ const MdEditor = dynamic(() => import('for-editor-markdown'), {
 export default function Question(props) {
     const [question, setQuestion] = useState([]);
     const [textAnswer, setTextAnswer] = useState('');
+    const [emails, setEmails] = useState([]);
 
     const {
         token,
@@ -40,6 +41,16 @@ export default function Question(props) {
 
         theQuestion.answers = sortedQuestions;
         setQuestion(theQuestion);
+
+        // get the emails of the users
+        const emailsArray = theQuestion?.answers?.map(answer => answer?.author?.email);
+        // add the email of the question author
+        emailsArray.push(theQuestion?.author?.email);
+        setEmails(emailsArray);
+        // remove duplicates
+        setEmails(emailsArray.filter((item, index) => emailsArray.indexOf(item) === index));
+        // remove the email of the current user (props.user?.email)
+        setEmails(emailsArray.filter(email => email !== props?.user?.email));
 
     }, [props.question]);
 
@@ -81,6 +92,7 @@ export default function Question(props) {
                             userQuestionEmail: question?.author?.email,
                             userAnswer: props?.user?.name,
                             url: `${window?.location?.href}`,
+                            emails: emails,
                         }
                     )}
                 >Responder

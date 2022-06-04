@@ -54,6 +54,9 @@ module.exports = {
             }
             else {
                 user.score -= 100;
+                if(user.score < 0){
+                    user.score = 0;
+                }
             }
             await user.save();
 
