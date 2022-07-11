@@ -19,6 +19,7 @@ export default function Question(props) {
     const [question, setQuestion] = useState([]);
     const [textAnswer, setTextAnswer] = useState('');
     const [emails, setEmails] = useState([]);
+    const [buttonClicked, setButtonClicked] = useState(false);
 
     const {
         token,
@@ -53,6 +54,24 @@ export default function Question(props) {
         setEmails(emailsArray.filter(email => email !== props?.user?.email));
 
     }, [props.question]);
+    
+    async function handleSubmitAnswer() {
+        setButtonClicked(true);
+        await submitNewAnswer(
+            question._id, 
+            token, 
+            textAnswer, 
+            {
+                title: question?.title,
+                userQuestion: question?.author?.name,
+                userQuestionEmail: question?.author?.email,
+                userAnswer: props?.user?.name,
+                url: `${window?.location?.href}`,
+                emails: emails,
+            }
+        )
+        setButtonClicked(false);
+    }
 
     return (
         <div className={styles.container}>
@@ -82,19 +101,8 @@ export default function Question(props) {
                     style={{ width: '100%', height: '350px' }}
                 />   
                 <button 
-                    onClick={() => submitNewAnswer(
-                        question._id, 
-                        token, 
-                        textAnswer, 
-                        {
-                            title: question?.title,
-                            userQuestion: question?.author?.name,
-                            userQuestionEmail: question?.author?.email,
-                            userAnswer: props?.user?.name,
-                            url: `${window?.location?.href}`,
-                            emails: emails,
-                        }
-                    )}
+                    onClick={ async () => await handleSubmitAnswer()}
+                    disabled={buttonClicked}
                 >Responder
                 </button>
             </div>
