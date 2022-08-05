@@ -29,8 +29,9 @@ export function SimpleMenuList({ questionId, answerId, type }) {
     router.push({
       pathname: 'EditTopic',
       query: {
-        id: questionId,
-        type: type 
+        questionId: questionId,
+        type: type,
+        answerId: ''
       }
     })
     }
